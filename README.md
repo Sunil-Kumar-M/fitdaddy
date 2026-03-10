@@ -19,9 +19,9 @@ Static fitness website deployed with GitHub Pages.
 - Avoid inline styles and inline event handlers in new code when updating existing features.
 - Reuse design tokens from `:root` instead of hardcoding colors.
 
-## Recommended Next Refactor
+## Project Structure
 
-The current homepage is functional but large. A cleaner structure would be:
+The homepage is organized as a simple static site:
 
 ```text
 .
