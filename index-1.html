@@ -1,0 +1,3348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charles Glass GOB Method — PPL + Abs + Forearms</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #0a0900;
+  --surface:    #111008;
+  --card:       #17140a;
+  --border:     #2a2410;
+  --border-hi:  #3d3418;
+  --accent:     #c9a84c;
+  --accent-dim: #7a6030;
+  --accent-glow:rgba(201,168,76,0.12);
+  --white:      #f0e8d4;
+  --muted:      #6e6248;
+  --sub:        #3a3020;
+  --text:       #d4c8a8;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  padding: 72px 64px 56px;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* big background number */
+.hero-bg-text {
+  position: absolute;
+  right: -20px;
+  top: -30px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 280px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(201,168,76,0.08);
+  pointer-events: none;
+  line-height: 1;
+  letter-spacing: -8px;
+  user-select: none;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.eyebrow-line {
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+.eyebrow-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(48px, 7vw, 92px);
+  font-weight: 400;
+  line-height: 0.92;
+  color: var(--white);
+  letter-spacing: -2px;
+}
+h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  margin-top: 20px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  max-width: 540px;
+  line-height: 2;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 0;
+  margin-top: 44px;
+  border: 1px solid var(--border);
+  width: fit-content;
+}
+.h-stat {
+  padding: 18px 32px;
+  border-right: 1px solid var(--border);
+  text-align: center;
+  position: relative;
+  transition: background 0.2s;
+}
+.h-stat:last-child { border-right: none; }
+.h-stat:hover { background: var(--surface); }
+.h-stat::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.25s;
+}
+.h-stat:hover::after { transform: scaleX(1); }
+
+.h-stat-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 30px;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.h-stat-lbl {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+/* ─── PRINCIPLES ─── */
+.principles {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 64px;
+  position: relative;
+}
+.principles::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent) 0%, transparent 60%);
+}
+.principles-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.principles-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.principle-chip {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  transition: border-color 0.2s, color 0.2s;
+  cursor: default;
+}
+.principle-chip:hover {
+  border-color: var(--accent-dim);
+  color: var(--text);
+}
+
+/* ─── WEEK NAV ─── */
+.week-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  background: rgba(10,10,10,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 64px;
+  overflow-x: auto;
+}
+.week-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 20px 28px 18px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.week-btn span {
+  font-size: 8px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  opacity: 0.5;
+  font-family: 'DM Sans', sans-serif;
+  text-transform: uppercase;
+}
+.week-btn:hover { color: var(--white); }
+.week-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ─── WEEK PANEL ─── */
+.week-panel { display: none; }
+.week-panel.active { display: block; }
+
+/* ─── WEEK INTRO ─── */
+.week-intro {
+  padding: 48px 64px 36px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.wi-left {}
+.wi-phase {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wi-phase::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 1px;
+  background: var(--accent);
+}
+.wi-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.05;
+  letter-spacing: -1px;
+}
+.wi-desc {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+  max-width: 480px;
+  font-weight: 300;
+}
+.wi-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 220px;
+  border: 1px solid var(--border);
+}
+.wi-param {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  gap: 20px;
+}
+.wi-param:last-child { border-bottom: none; }
+.wi-param-key {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.wi-param-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ─── DAYS ─── */
+.days-container {
+  padding: 32px 64px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border-top: 1px solid var(--border);
+}
+
+.day-block {
+  border: none;
+  background: var(--bg);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease, background 0.2s;
+}
+.day-block.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.day-block:hover { background: var(--card); }
+
+.day-top {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid transparent;
+  transition: border-color 0.2s;
+}
+.day-block:hover .day-top { border-left-color: var(--accent); }
+
+.day-num-col {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  padding: 14px 12px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  min-width: 40px;
+}
+
+.day-title-area {
+  flex: 1;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.day-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+.day-name span {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-left: 12px;
+}
+
+.day-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+.badge {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid;
+}
+.badge-gold  { border-color: var(--accent-dim); color: var(--accent); }
+.badge-red   { border-color: #4a2a10; color: #c9a84c; }
+.badge-blue  { border-color: #2a3010; color: #a8c870; }
+.badge-green { border-color: #1a3018; color: #70b888; }
+.badge-purple{ border-color: #3a2818; color: #c8a060; }
+.badge-rest  { border-color: var(--sub); color: var(--muted); }
+
+/* ─── EXERCISES GRID ─── */
+.exercises-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px;
+  background: var(--border);
+}
+.ex-cell {
+  background: var(--bg);
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  transition: background 0.15s;
+  position: relative;
+}
+.ex-cell::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.ex-cell:hover { background: var(--card); }
+.ex-cell:hover::before { opacity: 1; }
+
+.ex-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.ex-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+  flex: 1;
+}
+.ex-sets {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+.ex-glass-tip {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.6;
+  font-style: italic;
+  border-left: 2px solid var(--sub);
+  padding-left: 10px;
+}
+
+/* ─── REST BLOCK ─── */
+.rest-block {
+  padding: 32px 28px;
+  text-align: center;
+  background: var(--surface);
+}
+.rest-icon { font-size: 32px; margin-bottom: 10px; }
+.rest-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+.rest-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 300;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* ─── COACHING NOTE ─── */
+.coaching-note {
+  margin: 0 64px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  padding: 22px 28px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+.cn-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.cn-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.cn-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 300;
+}
+.cn-text strong { color: var(--white); font-weight: 500; }
+
+/* ─── NUTRITION ROW ─── */
+.nutrition-row {
+  margin: 24px 64px 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--border);
+}
+.nut-cell {
+  padding: 22px 24px;
+  border-right: 1px solid var(--border);
+  position: relative;
+  transition: background 0.2s;
+}
+.nut-cell:last-child { border-right: none; }
+.nut-cell:hover { background: var(--surface); }
+.nut-cell::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.6;
+}
+.nut-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--white);
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.nut-lbl {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.nut-note {
+  font-size: 11px;
+  color: var(--sub);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* ─── SPACER ─── */
+.spacer { height: 64px; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════
+   WEEKLY SCHEDULE
+══════════════════════════════════════ */
+.schedule-section {
+  padding: 40px 64px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.section-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-eyebrow::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--accent);
+  display: inline-block;
+}
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--white);
+  letter-spacing: -1px;
+  margin-bottom: 24px;
+}
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.sched-day {
+  background: var(--bg);
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: background 0.2s;
+  min-height: 130px;
+}
+.sched-day:hover { background: var(--card); }
+.sched-day.rest-day { opacity: 0.5; }
+.sched-day-name {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sched-time {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.sched-main {
+  font-family: 'DM Serif Display', serif;
+  font-size: 15px;
+  color: var(--white);
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+}
+.sched-sub {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.4;
+}
+.sched-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+.sched-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border: 1px solid;
+  text-transform: uppercase;
+}
+.stag-push  { border-color: var(--accent-dim); color: var(--accent); }
+.stag-pull  { border-color: #2a3818; color: #88c878; }
+.stag-legs  { border-color: #1a3020; color: #68b888; }
+.stag-abs   { border-color: #3a2c10; color: #d4a84c; }
+.stag-fore  { border-color: #2a2010; color: #b89040; }
+.stag-rest  { border-color: var(--sub); color: var(--muted); }
+
+/* ══════════════════════════════════════
+   EXPANDABLE EXERCISE CARDS
+══════════════════════════════════════ */
+.ex-cell {
+  cursor: pointer;
+}
+.ex-expand-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+.ex-expand-icon {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  user-select: none;
+}
+.ex-cell:hover .ex-expand-icon { opacity: 1; }
+.ex-detail {
+  display: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+.ex-cell.open .ex-detail { display: flex; }
+.ex-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.ex-meta-item {
+  background: var(--surface);
+  padding: 7px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ex-meta-key {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ex-meta-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.ex-glass-cue {
+  background: rgba(201,168,76,0.07);
+  border-left: 2px solid var(--accent);
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* ══════════════════════════════════════
+   ABS + FOREARMS SECTION TABS
+══════════════════════════════════════ */
+.suppl-nav {
+  display: flex;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 64px;
+  overflow-x: auto;
+  position: sticky;
+  top: 57px;
+  z-index: 90;
+  backdrop-filter: blur(16px);
+  background: rgba(10,10,10,0.97);
+}
+.suppl-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 14px 22px 12px;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+.suppl-btn:hover { color: var(--white); }
+.suppl-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.suppl-panel { display: none; }
+.suppl-panel.active { display: block; }
+
+/* ══════════════════════════════════════
+   ABS SECTION
+══════════════════════════════════════ */
+.abs-section, .forearms-section {
+  padding: 40px 64px 48px;
+}
+.suppl-intro {
+  display: flex;
+  gap: 40px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.suppl-desc {
+  max-width: 520px;
+}
+.suppl-desc p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-top: 10px;
+}
+.suppl-params {
+  border: 1px solid var(--border);
+  min-width: 220px;
+}
+.suppl-param {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  gap: 16px;
+}
+.suppl-param:last-child { border-bottom: none; }
+.sp-k {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.sp-v {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Abs/Forearms exercise table */
+.suppl-ex-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+.suppl-ex-row {
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-left: 3px solid transparent;
+  transition: background 0.15s, border-color 0.2s;
+}
+.suppl-ex-row:hover { background: var(--card); border-left-color: var(--accent); }
+.suppl-ex-row.open { background: var(--card); border-left-color: var(--accent); }
+.suppl-ex-num {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 16px 0 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.suppl-ex-body {
+  padding: 14px 20px 14px 0;
+}
+.suppl-ex-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.suppl-ex-name {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+}
+.suppl-ex-sets {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.suppl-ex-detail {
+  display: none;
+  margin-top: 12px;
+  flex-direction: column;
+  gap: 10px;
+}
+.suppl-ex-row.open .suppl-ex-detail { display: flex; }
+.suppl-meta-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+.suppl-meta-cell {
+  background: var(--surface);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.smc-k {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.smc-v {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+}
+.suppl-glass-cue {
+  background: rgba(201,168,76,0.06);
+  border-left: 2px solid var(--accent);
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-style: italic;
+}
+.suppl-glass-cue strong { color: var(--white); font-style: normal; font-weight: 500; }
+.suppl-expand-hint {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  color: var(--sub);
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+/* Week schedule inside abs/forearms */
+.suppl-weekly-sched {
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+.swsch-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 16px;
+}
+.swsch-cell {
+  background: var(--bg);
+  padding: 14px 16px;
+}
+.swsch-day {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.swsch-active { color: var(--white); }
+.swsch-label {
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.swsch-note {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* Morning session banner */
+.morning-banner {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.mb-time {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--accent);
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+.mb-divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+.mb-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mb-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.mb-desc {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .schedule-grid { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 700px) {
+  .hero, .principles, .page-nav, .week-nav, .week-intro, .days-container,
+  .coaching-note, .nutrition-row,
+  .schedule-section, .abs-section, .forearms-section,
+  .tool-section, .diet-section,
+  .suppl-nav { padding-left: 20px; padding-right: 20px; }
+  .hero { padding-top: 56px; padding-bottom: 40px; }
+  .hero-bg-text { font-size: 160px; right: -10px; top: -20px; }
+  h1 { font-size: clamp(36px, 12vw, 56px); }
+  .hero-sub { font-size: 10px; letter-spacing: 1.5px; }
+  .page-nav { top: 0; }
+  .page-tab {
+    min-width: 176px;
+    padding: 14px 16px 12px;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .page-tab span {
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+  .nutrition-row { grid-template-columns: repeat(2, 1fr); }
+  .nut-cell:nth-child(2) { border-right: none; }
+  .nut-cell:nth-child(3),
+  .nut-cell:nth-child(4) { border-top: 1px solid var(--border); }
+  .hero-stats { flex-wrap: wrap; }
+  .hero-stats, .week-nav, .suppl-nav, .page-nav { scroll-snap-type: x proximity; }
+  .page-tab, .week-btn, .suppl-btn { scroll-snap-align: start; }
+  .exercises-grid { grid-template-columns: 1fr; }
+  .week-intro { flex-direction: column; }
+  .wi-right { width: 100%; }
+  .week-btn { padding: 16px 18px 14px; }
+  .suppl-btn { padding: 14px 16px 12px; }
+  .schedule-grid { grid-template-columns: repeat(2, 1fr); }
+  .suppl-meta-row { grid-template-columns: repeat(2, 1fr); }
+  .suppl-intro { flex-direction: column; }
+  .suppl-params { width: 100%; }
+  .swsch-grid { grid-template-columns: repeat(3, 1fr); }
+  .ex-meta-grid { grid-template-columns: repeat(2, 1fr); }
+  .morning-banner { flex-wrap: wrap; }
+  .diet-grid { grid-template-columns: 1fr; }
+  .diet-card { padding: 16px; }
+  .meal-block { padding: 14px; }
+  .diet-day-meta { gap: 10px; }
+  .diet-day-meta span { font-size: 9px; }
+  .meal-nutrition { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .hero, .principles, .week-intro, .days-container,
+  .coaching-note, .nutrition-row,
+  .schedule-section, .abs-section, .forearms-section,
+  .tool-section, .diet-section,
+  .suppl-nav { padding-left: 14px; padding-right: 14px; }
+  .page-nav { padding-left: 14px; padding-right: 14px; }
+  .hero-bg-text { display: none; }
+  .hero-stats { width: 100%; }
+  .h-stat { flex: 1 1 50%; padding: 14px 16px; }
+  .schedule-grid,
+  .swsch-grid,
+  .suppl-meta-row,
+  .ex-meta-grid,
+  .meal-nutrition { grid-template-columns: 1fr; }
+  .page-tab {
+    min-width: 156px;
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+  .page-tab span { font-size: 8px; }
+  .week-btn, .suppl-btn { padding-left: 14px; padding-right: 14px; }
+  .tool-card { padding: 16px; }
+  .tool-card input, .tool-card button { width: 100%; }
+  .diet-card h3 { font-size: 22px; }
+  .meal-name { font-size: 14px; }
+  .meal-detail, .meal-recipe { font-size: 12px; }
+  .diet-day-meta { flex-direction: column; align-items: flex-start; }
+}
+
+.tool-section{
+padding:40px 64px;
+border-top:1px solid var(--border);
+}
+
+.page-nav{
+position:sticky;
+top:0;
+z-index:110;
+display:flex;
+gap:0;
+padding:0 64px;
+overflow-x:auto;
+background:rgba(10,10,10,0.97);
+backdrop-filter:blur(16px);
+border-top:1px solid var(--border);
+border-bottom:1px solid var(--border);
+scrollbar-width:none;
+}
+
+.page-nav::-webkit-scrollbar{ display:none; }
+
+.page-tab{
+background:none;
+border:none;
+border-bottom:2px solid transparent;
+color:var(--muted);
+font-family:'Space Mono', monospace;
+font-size:11px;
+font-weight:700;
+letter-spacing:2px;
+text-transform:uppercase;
+padding:18px 26px 16px;
+cursor:pointer;
+white-space:nowrap;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+transition:color 0.2s, border-color 0.2s;
+flex:0 0 auto;
+text-align:center;
+}
+
+.page-tab span{
+font-size:8px;
+font-weight:400;
+letter-spacing:1px;
+opacity:0.55;
+font-family:'DM Sans', sans-serif;
+text-transform:uppercase;
+}
+
+.page-tab:hover{ color:var(--white); }
+.page-tab.active{
+color:var(--accent);
+border-bottom-color:var(--accent);
+}
+
+.page-panel{
+display:none;
+min-height:40vh;
+}
+
+.page-panel.active{
+display:block;
+}
+
+.tool-card{
+background:var(--card);
+padding:20px;
+max-width:400px;
+width:100%;
+border:1px solid var(--border);
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.tool-card input{
+padding:10px;
+background:var(--bg);
+border:1px solid var(--border);
+color:var(--white);
+}
+
+.tool-card button{
+background:var(--accent);
+border:none;
+padding:10px;
+cursor:pointer;
+}
+
+.diet-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.diet-section{
+padding:40px 64px 56px;
+border-top:1px solid var(--border);
+}
+
+.diet-card{
+background:var(--card);
+padding:20px;
+border:1px solid var(--border);
+}
+
+.diet-card h3{
+font-family:'DM Serif Display', serif;
+font-size:24px;
+font-weight:400;
+color:var(--white);
+margin-bottom:12px;
+line-height:1.1;
+}
+
+.diet-card ul{
+list-style:none;
+display:flex;
+flex-direction:column;
+gap:10px;
+padding:0;
+}
+
+.diet-card li{
+color:var(--text);
+border-bottom:1px solid var(--border);
+padding-bottom:10px;
+}
+
+.diet-card li:last-child{
+border-bottom:none;
+padding-bottom:0;
+}
+
+.diet-intro{
+max-width:760px;
+margin:14px 0 28px;
+color:var(--muted);
+line-height:1.8;
+}
+
+.diet-card{
+display:flex;
+flex-direction:column;
+gap:16px;
+}
+
+.diet-day-meta{
+display:flex;
+justify-content:space-between;
+gap:16px;
+flex-wrap:wrap;
+padding-top:12px;
+border-top:1px solid var(--border);
+}
+
+.diet-day-meta span{
+font-family:'Space Mono', monospace;
+font-size:10px;
+letter-spacing:1px;
+text-transform:uppercase;
+color:var(--accent);
+}
+
+.meal-block{
+padding:16px;
+background:var(--surface);
+border:1px solid var(--border);
+}
+
+.meal-block h4{
+font-family:'Space Mono', monospace;
+font-size:11px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--accent);
+margin-bottom:10px;
+}
+
+.meal-name{
+font-size:15px;
+font-weight:600;
+color:var(--white);
+margin-bottom:8px;
+line-height:1.5;
+}
+
+.meal-detail{
+font-size:13px;
+color:var(--text);
+margin-bottom:6px;
+line-height:1.6;
+}
+
+.meal-recipe{
+font-size:12px;
+line-height:1.7;
+color:var(--muted);
+margin-bottom:10px;
+}
+
+.meal-nutrition{
+display:grid;
+grid-template-columns:repeat(4, minmax(0, 1fr));
+gap:8px;
+}
+
+.meal-nutrition span{
+display:block;
+padding:8px 10px;
+border:1px solid var(--border);
+background:var(--bg);
+font-family:'Space Mono', monospace;
+font-size:10px;
+letter-spacing:1px;
+text-transform:uppercase;
+color:var(--text);
+text-align:center;
+line-height:1.4;
+overflow-wrap:anywhere;
+}
+
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg-text">GOB</div>
+  <div class="hero-eyebrow">
+    <div class="eyebrow-line"></div>
+    <div class="eyebrow-text">Charles Glass Method · Advanced · 6 Days/Week · Morning 6:00–8:30 AM</div>
+    <div class="eyebrow-line"></div>
+  </div>
+  <h1>The <em>Godfather</em><br>Method</h1>
+  <p class="hero-sub">Isolation-first · Mind-muscle connection · Constant tension · Mechanical advantage adjustments · Controlled eccentrics · Abs & Forearms integrated</p>
+  <div class="hero-stats">
+    <div class="h-stat"><div class="h-stat-val">4</div><div class="h-stat-lbl">Weeks</div></div>
+    <div class="h-stat"><div class="h-stat-val">6</div><div class="h-stat-lbl">Days/Week</div></div>
+    <div class="h-stat"><div class="h-stat-val">PPL×2</div><div class="h-stat-lbl">Structure</div></div>
+    <div class="h-stat"><div class="h-stat-val">~90m</div><div class="h-stat-lbl">Per Session</div></div>
+    <div class="h-stat"><div class="h-stat-val">3×</div><div class="h-stat-lbl">Abs/Week</div></div>
+    <div class="h-stat"><div class="h-stat-val">2×</div><div class="h-stat-lbl">Forearms/Wk</div></div>
+  </div>
+</header>
+
+<!-- GOB PRINCIPLES -->
+<div class="principles">
+  <div class="principles-title">The Glass Principles — Applied to Every Exercise</div>
+  <div class="principles-grid">
+    <div class="principle-chip">🎯 Isolate Before Compound</div>
+    <div class="principle-chip">🔗 Constant Tension — No Lockout</div>
+    <div class="principle-chip">🐢 3–4 sec Eccentric Always</div>
+    <div class="principle-chip">📐 Angle Manipulation for Peak Contraction</div>
+    <div class="principle-chip">🤝 Cable > Barbell for Isolation</div>
+    <div class="principle-chip">🔄 Full Stretch at Bottom, Squeeze at Top</div>
+    <div class="principle-chip">⚖️ Lighter Weight, Perfect Tension</div>
+    <div class="principle-chip">🧠 Mind-Muscle First — Weight Second</div>
+  </div>
+</div>
+
+<nav class="page-nav">
+  <button class="page-tab active" onclick="showPageTab('workout', this)">Workout<span>PPL + Abs + Forearms</span></button>
+  <button class="page-tab" onclick="showPageTab('bmi', this)">BMI Calculator<span>Height and Weight</span></button>
+  <button class="page-tab" onclick="showPageTab('protein', this)">Protein Calculator<span>Daily Intake</span></button>
+  <button class="page-tab" onclick="showPageTab('meal', this)">Meal Planner<span>Weekly Indian Diet</span></button>
+</nav>
+
+<section id="page-workout" class="page-panel active">
+
+<!-- WEEKLY SCHEDULE -->
+<section class="schedule-section">
+  <div class="section-eyebrow">Morning Sessions · 6:00 AM – 8:30 AM</div>
+  <div class="section-title">Weekly Training Schedule</div>
+  <div class="schedule-grid">
+    <!-- MON -->
+    <div class="sched-day">
+      <div class="sched-day-name">Monday</div>
+      <div class="sched-time">6:00 – 7:45 AM</div>
+      <div class="sched-main">Push A</div>
+      <div class="sched-sub">Chest · Triceps</div>
+      <div class="sched-tags">
+        <span class="sched-tag stag-push">Push</span>
+        <span class="sched-tag stag-abs">Abs</span>
+      </div>
+    </div>
+    <!-- TUE -->
+    <div class="sched-day">
+      <div class="sched-day-name">Tuesday</div>
+      <div class="sched-time">6:00 – 7:45 AM</div>
+      <div class="sched-main">Pull A</div>
+      <div class="sched-sub">Back · Biceps</div>
+      <div class="sched-tags">
+        <span class="sched-tag stag-pull">Pull</span>
+        <span class="sched-tag stag-fore">Forearms</span>
+      </div>
+    </div>
+    <!-- WED -->
+    <div class="sched-day">
+      <div class="sched-day-name">Wednesday</div>
+      <div class="sched-time">6:00 – 8:00 AM</div>
+      <div class="sched-main">Legs A</div>
+      <div class="sched-sub">Quads · Hams · Calves</div>
+      <div class="sched-tags">
+        <span class="sched-tag stag-legs">Legs</span>
+        <span class="sched-tag stag-abs">Abs</span>
+      </div>
+    </div>
+    <!-- THU -->
+    <div class="sched-day">
+      <div class="sched-day-name">Thursday</div>
+      <div class="sched-time">6:00 – 7:45 AM</div>
+      <div class="sched-main">Push B</div>
+      <div class="sched-sub">Shoulders · Triceps</div>
+      <div class="sched-tags">
+        <span class="sched-tag stag-push">Push</span>
+        <span class="sched-tag stag-fore">Forearms</span>
+      </div>
+    </div>
+    <!-- FRI -->
+    <div class="sched-day">
+      <div class="sched-day-name">Friday</div>
+      <div class="sched-time">6:00 – 8:00 AM</div>
+      <div class="sched-main">Pull B</div>
+      <div class="sched-sub">Back Width · Biceps</div>
+      <div class="sched-tags">
+        <span class="sched-tag stag-pull">Pull</span>
+        <span class="sched-tag stag-abs">Abs</span>
+      </div>
+    </div>
+    <!-- SAT -->
+    <div class="sched-day">
+      <div class="sched-day-name">Saturday</div>
+      <div class="sched-time">6:00 – 8:15 AM</div>
+      <div class="sched-main">Legs B</div>
+      <div class="sched-sub">Glutes · Hams · Calves</div>
+      <div class="sched-tags">
+        <span class="sched-tag stag-legs">Legs</span>
+      </div>
+    </div>
+    <!-- SUN -->
+    <div class="sched-day rest-day">
+      <div class="sched-day-name">Sunday</div>
+      <div class="sched-time">—</div>
+      <div class="sched-main" style="color:var(--muted)">Rest</div>
+      <div class="sched-sub">Active recovery · Mobility · Sleep</div>
+      <div class="sched-tags">
+        <span class="sched-tag stag-rest">Off</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPLEMENTARY NAV: PPL Weeks | Abs | Forearms -->
+<nav class="suppl-nav">
+  <button class="suppl-btn active" onclick="showSuppl('ppl',this)">PPL 4-Week Cycle</button>
+  <button class="suppl-btn" onclick="showSuppl('abs',this)">Abs Program</button>
+  <button class="suppl-btn" onclick="showSuppl('forearms',this)">Forearms Program</button>
+</nav>
+
+<div id="suppl-ppl" class="suppl-panel active">
+<nav class="week-nav" style="top:114px">
+  <button class="week-btn active" onclick="showWeek(1,this)">Week 1<span>Activation</span></button>
+  <button class="week-btn" onclick="showWeek(2,this)">Week 2<span>Hypertrophy</span></button>
+  <button class="week-btn" onclick="showWeek(3,this)">Week 3<span>Intensification</span></button>
+  <button class="week-btn" onclick="showWeek(4,this)">Week 4<span>Deload</span></button>
+</nav>
+
+<!-- ══════════ WEEK 1 ══════════ -->
+<div class="week-panel active" id="week-1">
+  <div class="week-intro">
+    <div class="wi-left">
+      <div class="wi-phase">Phase 01 of 04</div>
+      <div class="wi-title">Activation &<br>Connection</div>
+      <div class="wi-desc">Charles Glass always starts by building the mind-muscle connection before loading. Week 1 establishes tension patterns: pre-exhaust the target, then hit the compound. Every rep is deliberate — slow eccentrics, peak squeeze, no momentum.</div>
+    </div>
+    <div class="wi-right">
+      <div class="wi-param"><span class="wi-param-key">Sets × Reps</span><span class="wi-param-val">4 × 10–12</span></div>
+      <div class="wi-param"><span class="wi-param-key">Eccentric</span><span class="wi-param-val">3–4 sec</span></div>
+      <div class="wi-param"><span class="wi-param-key">Rest (Compound)</span><span class="wi-param-val">90 sec</span></div>
+      <div class="wi-param"><span class="wi-param-key">Rest (Isolation)</span><span class="wi-param-val">45–60 sec</span></div>
+      <div class="wi-param"><span class="wi-param-key">Intensity</span><span class="wi-param-val">RPE 7–8</span></div>
+      <div class="wi-param"><span class="wi-param-key">Technique</span><span class="wi-param-val">Pre-Exhaust</span></div>
+    </div>
+  </div>
+
+  <div class="days-container">
+
+    <!-- D1: Push A — Chest + Triceps -->
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Monday · Day 01</div>
+        <div class="day-title-area">
+          <div class="day-name">Push A <span>Chest · Triceps</span></div>
+          <div class="day-badges"><span class="badge badge-gold">Pre-Exhaust</span><span class="badge badge-red">4 × 10–12</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Fly (Low-to-High) — PRE-EXHAUST</span><span class="ex-sets">4 × 15</span></div>
+          <div class="ex-glass-tip">Glass always pre-exhausts the chest. Set cables low, arms slightly bent, squeeze at top like hugging a barrel. No lockout.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Incline DB Press (30° Angle)</span><span class="ex-sets">4 × 10–12</span></div>
+          <div class="ex-glass-tip">30° incline only — not 45°. Elbows flared, lower to full stretch, press to just short of lockout. Keep chest loaded throughout.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Flat DB Press (Neutral Grip)</span><span class="ex-sets">4 × 10–12</span></div>
+          <div class="ex-glass-tip">Neutral grip reduces shoulder stress and keeps more tension on the pecs. Pause at the bottom for 1 sec at full stretch.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Pec Deck / Machine Fly</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">Glass loves the machine fly — constant cable tension. Slow 4-sec negative, hold the contracted position for 2 sec each rep.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Overhead Cable Tricep Ext.</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Face away from cable. Arms overhead = long head fully stretched. Lower slowly, extend fully. Elbows stay pinned to ears.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Single-Arm Cable Pushdown</span><span class="ex-sets">3 × 15/arm</span></div>
+          <div class="ex-glass-tip">One arm at a time for full isolation. Rotate wrist slightly outward at bottom for peak tricep contraction. No body swing.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D2: Pull A — Back + Biceps -->
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Tuesday · Day 02</div>
+        <div class="day-title-area">
+          <div class="day-name">Pull A <span>Back · Biceps</span></div>
+          <div class="day-badges"><span class="badge badge-blue">Stretch & Contract</span><span class="badge badge-red">4 × 10–12</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Straight-Arm Pulldown — PRE-EXHAUST</span><span class="ex-sets">4 × 15</span></div>
+          <div class="ex-glass-tip">Isolates lat without bicep involvement. Slight forward lean, arms almost straight, pull bar to hips. Feel the lat fully load.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Wide-Grip Lat Pulldown</span><span class="ex-sets">4 × 10–12</span></div>
+          <div class="ex-glass-tip">Slight back lean, pull to upper chest. Glass emphasizes: retract scapula FIRST before pulling arms. Slow 4-sec rise on negative.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Chest-Supported DB Row</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Chest on pad eliminates lower back. Drive elbow straight up and back. Squeeze rhomboids hard at top. No shoulder shrug.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Seated Row (V-Bar)</span><span class="ex-sets">3 × 12</span></div>
+          <div class="ex-glass-tip">Sit upright. At the stretch: let shoulders protract fully. At peak: pull elbows behind torso, not just to it. Hold 1 sec.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Incline DB Curl (45°)</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Glass staple for long-head bicep. Arm behind torso = full stretch. Supinate at top aggressively. Never let shoulders roll forward.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Single-Arm Cable Curl</span><span class="ex-sets">3 × 15/arm</span></div>
+          <div class="ex-glass-tip">Cable keeps tension at full extension unlike dumbbells. Curl across body slightly for better peak contraction. Squeeze for 2 sec.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D3: Legs A -->
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Wednesday · Day 03</div>
+        <div class="day-title-area">
+          <div class="day-name">Legs A <span>Quads · Hamstrings · Calves</span></div>
+          <div class="day-badges"><span class="badge badge-gold">Pre-Exhaust</span><span class="badge badge-green">4 × 10–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Leg Extension — PRE-EXHAUST</span><span class="ex-sets">4 × 15</span></div>
+          <div class="ex-glass-tip">Glass pre-exhausts quads before squatting. Point toes slightly outward for inner quad. Hold contracted position for 2 sec at top.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Hack Squat (Feet High & Wide)</span><span class="ex-sets">4 × 10–12</span></div>
+          <div class="ex-glass-tip">Foot placement shifts load. High-wide targets glutes/hams. Never lock out at top — keep quads under constant tension. 4-sec descent.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Romanian Deadlift (DB)</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Slow descent, feel hamstrings stretching fully. Push hips back not down. Squeeze glutes hard on the way up. Never round back.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Lying Leg Curl</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Plantarflex feet (toes pointed) to maximize hamstring contraction. Slow 4-sec negative. Don't let hips rise at the top.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Walking Lunge (DBs)</span><span class="ex-sets">3 × 16 steps</span></div>
+          <div class="ex-glass-tip">Long stride to hit glutes. Torso upright. Glass emphasizes the glute-quad co-contraction — feel both working on every step.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Standing Calf Raise (Single Leg)</span><span class="ex-sets">4 × 15/leg</span></div>
+          <div class="ex-glass-tip">Glass trains calves unilaterally for full range. Full stretch at bottom, 2-sec pause. Rise to absolute peak contraction. No bouncing.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D4: Push B — Shoulders + Triceps -->
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Thursday · Day 04</div>
+        <div class="day-title-area">
+          <div class="day-name">Push B <span>Shoulders · Triceps</span></div>
+          <div class="day-badges"><span class="badge badge-purple">3D Delts</span><span class="badge badge-red">4 × 12–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Lateral Raise — PRE-EXHAUST</span><span class="ex-sets">4 × 15</span></div>
+          <div class="ex-glass-tip">Cable from low pulley, cross-body. Constant tension through full ROM — unlike dumbbells which go slack at the bottom. Elbow slightly bent.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Seated DB Shoulder Press</span><span class="ex-sets">4 × 10–12</span></div>
+          <div class="ex-glass-tip">Do NOT press fully overhead — stop at ear level to keep deltoid loaded. Lower slowly. Elbows slightly in front of body throughout.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Bent-Over Rear Delt Cable Fly</span><span class="ex-sets">4 × 15</span></div>
+          <div class="ex-glass-tip">Cables crossed over, arms at shoulder height. Pull wide and squeeze scapulae hard. Rear delts are chronically underdeveloped — own this.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">DB Upright Row (Wide Grip)</span><span class="ex-sets">3 × 12</span></div>
+          <div class="ex-glass-tip">Wide grip takes pressure off rotator cuff. Lead with elbows, pull to chin level. Pause at top — feel the lateral delt peak contraction.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Overhead Cable Tricep Extension</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Long-head stretch is king for tricep mass. Rope attachment, face away. Lower slowly behind head, extend fully without shoulder movement.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Bench Dip (Feet Elevated)</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">Torso upright, elbows point straight back. Lower to 90° only — Glass avoids excessive dipping that shifts load off triceps.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D5: Pull B -->
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Friday · Day 05</div>
+        <div class="day-title-area">
+          <div class="day-name">Pull B <span>Back Width · Biceps</span></div>
+          <div class="day-badges"><span class="badge badge-blue">Lat Width Focus</span><span class="badge badge-red">4 × 10–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Pullover Machine / Cable Pullover — PRE-EXHAUST</span><span class="ex-sets">4 × 15</span></div>
+          <div class="ex-glass-tip">Arms straight, isolates lat fully. Stretch arms overhead as far as possible, pull through to hips. Feel the serratus and lat co-contract.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Close-Grip Lat Pulldown (Underhand)</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Underhand grip puts bicep in stronger position, allows heavier lat loading. Pull to upper chest, slight backward lean, hold at bottom 1 sec.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Single-Arm DB Row (Knee on Bench)</span><span class="ex-sets">4 × 12/side</span></div>
+          <div class="ex-glass-tip">Glass insists on unilateral work for back symmetry. Pull elbow high and behind torso. Rotate slightly at top for max rhomboid squeeze.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Face Pull (Rope, Eye Level)</span><span class="ex-sets">4 × 20</span></div>
+          <div class="ex-glass-tip">Critical for rear delt & rotator cuff health. Pull rope to face, split the rope, externally rotate hard at peak. Non-negotiable for shoulder longevity.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Preacher Curl (Machine or EZ Bar)</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Locks the arm in place for pure bicep isolation. Glass loves this because it eliminates all cheating. 3-sec negative, don't fully extend — keep tension.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Hammer Curl (Alternating, Cross-Body)</span><span class="ex-sets">3 × 12/arm</span></div>
+          <div class="ex-glass-tip">Cross-body version better targets brachialis for arm thickness. Keep elbow pinned to side. Slow eccentric. Supinate slightly at top.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D6: Legs B -->
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Saturday · Day 06</div>
+        <div class="day-title-area">
+          <div class="day-name">Legs B <span>Glutes · Hamstrings · Calves</span></div>
+          <div class="day-badges"><span class="badge badge-gold">Posterior Focus</span><span class="badge badge-green">4 × 10–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Glute Kickback — PRE-EXHAUST</span><span class="ex-sets">4 × 15/leg</span></div>
+          <div class="ex-glass-tip">Isolates glute before squatting. Slight forward lean, kick leg back and up. Squeeze the glute at peak contraction for 2 sec. Foot flexed.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Barbell Hip Thrust</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Drive through heels. At top: posterior pelvic tilt (tuck hips under) for maximal glute squeeze. Hold 2 sec. Chin tucked to chest throughout.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Bulgarian Split Squat (DBs)</span><span class="ex-sets">4 × 10/leg</span></div>
+          <div class="ex-glass-tip">Glass emphasizes unilateral work for symmetry. Long stride hits glute/ham more. Front shin stays vertical. Slow 4-sec descent. No knee cave.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Seated Leg Curl</span><span class="ex-sets">4 × 15</span></div>
+          <div class="ex-glass-tip">Seated position keeps hamstrings under stretch throughout. Point toes up for enhanced contraction. 4-sec negative. Don't fully extend at top.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Leg Press (Low & Narrow Foot)</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">Low narrow foot emphasizes vastus medialis (teardrop). Stop short of lockout — maintain quad tension. 4-sec eccentric phase on every rep.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Donkey Calf Raise / Seated Calf Raise</span><span class="ex-sets">5 × 20</span></div>
+          <div class="ex-glass-tip">Glass trains calves with high reps. Full range essential: full stretch at bottom (pause), rise to absolute peak, hold 2 sec. Toes straight, in & out variants.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REST -->
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Sunday · Day 07</div>
+        <div class="day-title-area">
+          <div class="day-name">Rest Day <span>Recovery</span></div>
+          <div class="day-badges"><span class="badge badge-rest">Mandatory</span></div>
+        </div>
+      </div>
+      <div class="rest-block">
+        <div class="rest-icon">🛌</div>
+        <div class="rest-title">Recovery is Training</div>
+        <div class="rest-desc">Muscles grow on rest days. Charles Glass: "The workout is the stimulus. Sleep and food is where the magic happens." Prioritize 8–9 hours sleep, 1g protein per lb bodyweight, and mobility work.</div>
+      </div>
+    </div>
+
+  </div><!-- end days-container -->
+
+  <div class="coaching-note">
+    <div class="cn-icon">💬</div>
+    <div class="cn-content">
+      <div class="cn-title">Glass Coaching Cue — Week 1</div>
+      <div class="cn-text">"<strong>Don't think about the weight — think about the muscle.</strong> If you can't feel it working, you're wasting your time. Week 1 is about establishing the neural pathway between your brain and that muscle. Every rep, visualize the muscle contracting. The weight is secondary. The connection is primary."</div>
+    </div>
+  </div>
+
+  <div class="nutrition-row">
+    <div class="nut-cell"><div class="nut-val">3,400</div><div class="nut-lbl">Calories</div><div class="nut-note">Slight surplus for mass</div></div>
+    <div class="nut-cell"><div class="nut-val">220g</div><div class="nut-lbl">Protein</div><div class="nut-note">1.2g / lb bodyweight</div></div>
+    <div class="nut-cell"><div class="nut-val">380g</div><div class="nut-lbl">Carbs</div><div class="nut-note">Load pre & post workout</div></div>
+    <div class="nut-cell"><div class="nut-val">80g</div><div class="nut-lbl">Fats</div><div class="nut-note">Hormonal baseline</div></div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ══════════ WEEK 2 ══════════ -->
+<div class="week-panel" id="week-2">
+  <div class="week-intro">
+    <div class="wi-left">
+      <div class="wi-phase">Phase 02 of 04</div>
+      <div class="wi-title">Hypertrophy<br>& Peak Contraction</div>
+      <div class="wi-desc">Volume increases. Glass adds mechanical drop sets — changing the angle mid-set to hit fresh fibers. Isolation techniques deepen: partial reps in the stretched position added to the end of sets. Every muscle group gets a finisher focused purely on squeeze.</div>
+    </div>
+    <div class="wi-right">
+      <div class="wi-param"><span class="wi-param-key">Sets × Reps</span><span class="wi-param-val">4–5 × 10–15</span></div>
+      <div class="wi-param"><span class="wi-param-key">Eccentric</span><span class="wi-param-val">3–4 sec</span></div>
+      <div class="wi-param"><span class="wi-param-key">Rest</span><span class="wi-param-val">60–75 sec</span></div>
+      <div class="wi-param"><span class="wi-param-key">Technique</span><span class="wi-param-val">Drop Sets + Partials</span></div>
+      <div class="wi-param"><span class="wi-param-key">Intensity</span><span class="wi-param-val">RPE 8–9</span></div>
+      <div class="wi-param"><span class="wi-param-key">Volume vs W1</span><span class="wi-param-val">+20%</span></div>
+    </div>
+  </div>
+
+  <div class="days-container">
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Monday · Day 01</div>
+        <div class="day-title-area">
+          <div class="day-name">Push A <span>Chest · Triceps</span></div>
+          <div class="day-badges"><span class="badge badge-gold">Angle Drop Sets</span><span class="badge badge-red">5 × 10–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Pec Deck — PRE-EXHAUST</span><span class="ex-sets">5 × 15</span></div>
+          <div class="ex-glass-tip">Start here every chest day this week. 5 full sets before any pressing. Squeeze every rep for 2 sec. By the time you press, the pec is already awake.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Low-to-High Cable Fly → Mechanical Drop to Flat</span><span class="ex-sets">4 × 12+8</span></div>
+          <div class="ex-glass-tip">Do 12 reps low-to-high (lower chest), then immediately change angle to flat and do 8 more. Same weight, different fiber recruitment. Glass hallmark.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Incline DB Press (30°)</span><span class="ex-sets">4 × 10–12</span></div>
+          <div class="ex-glass-tip">After the cable pre-exhaust, pecs are loaded. Use slightly less weight than W1 but focus on every inch of the ROM. No momentum off the chest.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Flat DB Press + Partials at Stretch</span><span class="ex-sets">4 × 10+5</span></div>
+          <div class="ex-glass-tip">After 10 full reps, do 5 partial reps in the bottom half only (where stretch is greatest). Forces extra time under tension at the most anabolic position.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Overhead Cable Tricep Ext. → Drop Set</span><span class="ex-sets">4 × 12 + Drop</span></div>
+          <div class="ex-glass-tip">On the final set: after 12 reps, immediately drop weight 25% and do 10 more. No rest between. Long-head fully exhausted. Controlled at all times.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Rope Pushdown (Finisher)</span><span class="ex-sets">3 × 20</span></div>
+          <div class="ex-glass-tip">Light weight, maximum squeeze. Split the rope wide at the bottom and hold for 2 sec. Full tricep pump to finish. High rep, no ego.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Tuesday · Day 02</div>
+        <div class="day-title-area">
+          <div class="day-name">Pull A <span>Back · Biceps</span></div>
+          <div class="day-badges"><span class="badge badge-blue">Stretch Overload</span><span class="badge badge-red">4–5 × 10–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Straight-Arm Pulldown — PRE-EXHAUST</span><span class="ex-sets">5 × 15</span></div>
+          <div class="ex-glass-tip">5 sets this week. Full lat isolation. Arms straight, arc the bar to hips. At the top — let arms rise fully overhead for maximum lat stretch before pulling.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Wide-Grip Pulldown + Partials at Stretch</span><span class="ex-sets">4 × 10+5</span></div>
+          <div class="ex-glass-tip">After 10 full reps, do 5 partial reps in the top half (stretch position) only. Forces the lat into a deep stretch overload — one of Glass's most effective techniques.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Single-Arm DB Row (High Elbow)</span><span class="ex-sets">4 × 12/side</span></div>
+          <div class="ex-glass-tip">Elbow tracks up and back — not just up. This slight rotation at the top contracts the mid-back and rear delt simultaneously. Controlled drop per rep.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Low Cable Row (Wide Bar) → Angle Drop</span><span class="ex-sets">4 × 12+8</span></div>
+          <div class="ex-glass-tip">Do 12 with wide bar (upper back focus), then switch to V-bar and do 8 more (lat focus). Mechanical drop with no rest — different fibers, same pump.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Spider Curl (DB on Incline Bench)</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">Chest on incline, arms hanging. At full extension = full bicep stretch. Curl up, supinate aggressively. Glass loves this position for peak bicep development.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Curl → Drop Set (Finisher)</span><span class="ex-sets">3 × 15 + Drop</span></div>
+          <div class="ex-glass-tip">Final set: 15 reps, drop 30%, 10 more reps, drop again, rep to failure. Triple drop set as a bicep flush. Peak contraction every single rep. No swinging.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Wednesday · Day 03</div>
+        <div class="day-title-area">
+          <div class="day-name">Legs A <span>Quads · Hamstrings</span></div>
+          <div class="day-badges"><span class="badge badge-gold">Pre-Exhaust + Partials</span><span class="badge badge-green">4–5 × 10–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Leg Extension — PRE-EXHAUST</span><span class="ex-sets">5 × 15</span></div>
+          <div class="ex-glass-tip">5 full sets this week. Toes pointed slightly out. Hold peak contraction for 2 sec each rep. Your quads should be fully engorged before squatting.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Hack Squat + Partials at Bottom</span><span class="ex-sets">4 × 10+5</span></div>
+          <div class="ex-glass-tip">10 full reps, then 5 partials in the bottom position (deepest stretch). At the bottom of the hack squat, quads are maximally loaded — exploit it.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Romanian Deadlift → Slow Eccentric</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">5-second lowering phase. Feel every inch of hamstring loading. Glass calls this "loading the spring." Push hips back aggressively. Minimal knee bend.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Seated Leg Curl → Drop Set</span><span class="ex-sets">4 × 12 + Drop</span></div>
+          <div class="ex-glass-tip">Seated position maximizes hamstring stretch. On final set: full 12 reps, then immediately drop 20% and rep to failure. Full pump in the hamstring belly.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Leg Press (Low Narrow — Teardrop)</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">Feet low on the platform, hip-width. Targets vastus medialis. Stop 15° short of lockout always. Quad stays on fire the entire set. 4-sec eccentric.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Standing Calf Raise (3 positions)</span><span class="ex-sets">4 × 20</span></div>
+          <div class="ex-glass-tip">Set 1–2: toes straight. Set 3: toes out (inner calf). Set 4: toes in (outer calf). Glass hits all three calf head variations for complete development.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Thursday · Day 04</div>
+        <div class="day-title-area">
+          <div class="day-name">Push B <span>Shoulders · Triceps</span></div>
+          <div class="day-badges"><span class="badge badge-purple">3D Shoulder Isolation</span><span class="badge badge-red">4–5 × 12–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Lateral Raise — PRE-EXHAUST</span><span class="ex-sets">5 × 15</span></div>
+          <div class="ex-glass-tip">Cross-body cable, 5 sets. At shoulder height — pause 2 sec. Think "lead with the pinky" to externally rotate and hit lateral delt over anterior delt.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Seated DB Press → Mechanical Drop to Arnold</span><span class="ex-sets">4 × 10+8</span></div>
+          <div class="ex-glass-tip">10 standard presses, then immediately convert to Arnold press (rotate as you lower). Different delt-head loading in one seamless mechanical drop. No rest.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Bent-Over Rear Delt Cable Fly</span><span class="ex-sets">5 × 20</span></div>
+          <div class="ex-glass-tip">High reps for rear delt. Cables crossed, pull wide and hold. External rotation at peak. Glass: "Most people have no rear delts because they never feel them." Feel them.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">DB Upright Row + Partial Hold</span><span class="ex-sets">4 × 12</span></div>
+          <div class="ex-glass-tip">At the top of each rep, hold 2 sec and feel the lateral delt contract. Wide grip, lead with elbows. This pause technique turns a simple move into an isolator.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Overhead Cable Extension → Drop Set</span><span class="ex-sets">4 × 12 + Drop</span></div>
+          <div class="ex-glass-tip">Final set: triple drop. Long head fully exhausted. Stay slow — especially on the drop — when you're tired is when form breaks down and injury happens.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Kickback (Cable, Both Arms)</span><span class="ex-sets">3 × 20</span></div>
+          <div class="ex-glass-tip">Cable kickback for constant tension at extension — where the dumbbell goes slack, the cable still loads. Rotate wrist at peak. High rep flush to finish.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Friday · Day 05</div>
+        <div class="day-title-area">
+          <div class="day-name">Pull B <span>Back Thickness · Biceps</span></div>
+          <div class="day-badges"><span class="badge badge-blue">Mid-Back Focus</span><span class="badge badge-red">4–5 × 10–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Pullover Machine — PRE-EXHAUST</span><span class="ex-sets">5 × 15</span></div>
+          <div class="ex-glass-tip">Arms straight throughout — this is a lat exercise, not a tricep one. Stretch arms completely overhead, pull through to hips. Hold at bottom for 2 sec.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Meadows Row (Single Arm Landmine)</span><span class="ex-sets">4 × 10/side</span></div>
+          <div class="ex-glass-tip">Staggered stance, elbow flares out. Hits the upper lat and teres in a unique plane. Glass loves this for back thickness. Pull explosively, lower with control.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Chest-Supported Row → Angle Drop</span><span class="ex-sets">4 × 12+8</span></div>
+          <div class="ex-glass-tip">First 12 reps: elbows flared (upper back). Then drop weight and pull elbows tucked to ribs (lat). Two back zones, one set, no rest.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Face Pull (High Reps)</span><span class="ex-sets">4 × 25</span></div>
+          <div class="ex-glass-tip">Glass programs this twice per week — non-negotiable. 25 reps light weight. This is longevity work for the rotator cuff. Never skip it. External rotation hard at peak.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Concentration Curl</span><span class="ex-sets">4 × 15/arm</span></div>
+          <div class="ex-glass-tip">Elbow braced on inner thigh. Slow curl, supinate hard at top, hold 2 sec. This Glass classic eliminates every ounce of cheating — just pure bicep.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">21s (Barbell Curl)</span><span class="ex-sets">3 × 21</span></div>
+          <div class="ex-glass-tip">7 bottom half + 7 top half + 7 full reps. Covers every part of the strength curve. Keep strict form throughout — the last 7 full reps should be brutal.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Saturday · Day 06</div>
+        <div class="day-title-area">
+          <div class="day-name">Legs B <span>Glutes · Hamstrings · Calves</span></div>
+          <div class="day-badges"><span class="badge badge-gold">Posterior + Isolation</span><span class="badge badge-green">4–5 × 12–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Glute Kickback — PRE-EXHAUST</span><span class="ex-sets">5 × 15/leg</span></div>
+          <div class="ex-glass-tip">5 full sets each leg before any compound. Posterior pelvic tilt at peak, foot flexed, hold 2 sec. Glute must be burning before you hip thrust.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Barbell Hip Thrust + Pause</span><span class="ex-sets">5 × 12</span></div>
+          <div class="ex-glass-tip">3-second pause at the top with maximum pelvic tuck. This pause technique eliminates hip flexor momentum and forces the glute to hold the load isometrically.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Bulgarian Split Squat → Drop Set</span><span class="ex-sets">4 × 10 + Drop</span></div>
+          <div class="ex-glass-tip">On final set: 10 reps weighted, drop DBs immediately and do 10 bodyweight reps. Pure glute-ham burn. Glass: unilateral training catches imbalances fast.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Lying Leg Curl + Partials at Stretch</span><span class="ex-sets">4 × 12+5</span></div>
+          <div class="ex-glass-tip">Plantarflex feet for better contraction. After 12 full reps: 5 partial reps at the bottom stretch position. Hamstrings will be on fire — embrace it.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Walking Lunges (Long Stride)</span><span class="ex-sets">3 × 20 steps</span></div>
+          <div class="ex-glass-tip">Longer stride = more glute. Keep torso upright. Think about pushing the back knee toward the floor rather than stepping forward — totally different feel.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Seated Calf Raise (Slow — 5 sec down)</span><span class="ex-sets">5 × 20</span></div>
+          <div class="ex-glass-tip">5-second negative on every rep. Absolute full stretch at bottom. Hold peak for 2 sec. Glass trains calves like a bodypart — not an afterthought. Own them.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Sunday · Day 07</div>
+        <div class="day-title-area">
+          <div class="day-name">Rest Day <span>Recovery</span></div>
+          <div class="day-badges"><span class="badge badge-rest">Active Recovery</span></div>
+        </div>
+      </div>
+      <div class="rest-block">
+        <div class="rest-icon">⚖️</div>
+        <div class="rest-title">Recharge the System</div>
+        <div class="rest-desc">Light stretching, foam rolling hip flexors and thoracic spine. Optional 20-min walk. Glass emphasizes: you cannot grow if you're always breaking down. Rest is your competitive edge.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="coaching-note">
+    <div class="cn-icon">💬</div>
+    <div class="cn-content">
+      <div class="cn-title">Glass Coaching Cue — Week 2</div>
+      <div class="cn-text">"<strong>Angles are everything.</strong> When you change the angle, you change the muscle. A flat fly and an incline fly are not the same exercise — they're completely different. I can make any exercise harder or easier just by changing where you stand, where the cable is, and where your elbow points. That's the art."</div>
+    </div>
+  </div>
+
+  <div class="nutrition-row">
+    <div class="nut-cell"><div class="nut-val">3,600</div><div class="nut-lbl">Calories</div><div class="nut-note">Volume phase — eat to grow</div></div>
+    <div class="nut-cell"><div class="nut-val">230g</div><div class="nut-lbl">Protein</div><div class="nut-note">Synthesis peak</div></div>
+    <div class="nut-cell"><div class="nut-val">410g</div><div class="nut-lbl">Carbs</div><div class="nut-note">Fuel high volume output</div></div>
+    <div class="nut-cell"><div class="nut-val">85g</div><div class="nut-lbl">Fats</div><div class="nut-note">Hormonal support</div></div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ══════════ WEEK 3 ══════════ -->
+<div class="week-panel" id="week-3">
+  <div class="week-intro">
+    <div class="wi-left">
+      <div class="wi-phase">Phase 03 of 04</div>
+      <div class="wi-title">Intensification<br>& Supersets</div>
+      <div class="wi-desc">Peak intensity week. Glass introduces his signature "pre-exhaust supersets" — isolate the target muscle first, then immediately hit the compound without rest. This forces the primary mover to work in a pre-fatigued state, maximizing fiber recruitment and metabolic damage.</div>
+    </div>
+    <div class="wi-right">
+      <div class="wi-param"><span class="wi-param-key">Sets × Reps</span><span class="wi-param-val">5 × 8–12</span></div>
+      <div class="wi-param"><span class="wi-param-key">Technique</span><span class="wi-param-val">Pre-Exhaust SS</span></div>
+      <div class="wi-param"><span class="wi-param-key">Rest (SS)</span><span class="wi-param-val">0 sec between</span></div>
+      <div class="wi-param"><span class="wi-param-key">Rest (After SS)</span><span class="wi-param-val">90–120 sec</span></div>
+      <div class="wi-param"><span class="wi-param-key">Intensity</span><span class="wi-param-val">RPE 9–10</span></div>
+      <div class="wi-param"><span class="wi-param-key">Volume vs W2</span><span class="wi-param-val">Similar, heavier</span></div>
+    </div>
+  </div>
+
+  <div class="days-container">
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Monday · Day 01</div>
+        <div class="day-title-area">
+          <div class="day-name">Push A <span>Chest · Triceps</span></div>
+          <div class="day-badges"><span class="badge badge-gold">Pre-Exhaust Supersets</span><span class="badge badge-red">5 × 8–12</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A1: Pec Deck (15 reps)</span><span class="ex-sets">5 rounds</span></div>
+          <div class="ex-glass-tip">SUPERSET with A2 below — no rest between. This is Glass's signature pre-exhaust superset. Exhaust the pec on the isolator, then force it to work in compound.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A2: Incline DB Press (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">Immediately after pec deck. Your pecs are pre-fatigued, meaning the chest — not the triceps — will be the limiting factor. Maximum chest recruitment. Rest 90 sec, repeat 5x.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B1: Cable Fly Low-to-High (12 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Second pre-exhaust superset. Target lower and mid chest. Constant squeeze. Into B2 immediately.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B2: Flat DB Press (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">Pre-exhausted pec forces full chest engagement. Lower with 4-sec negative. Stop short of lockout at top. Rest 90 sec, repeat 4x.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS C1: Overhead Cable Ext. (12 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Tricep pre-exhaust superset starts here. Long head fully loaded. Into C2 without rest.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS C2: Weighted Dip (8–10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">After overhead extension, triceps are screaming. Short ROM dip — elbows back, upright torso. Even 8 reps will feel like 20. Rest 90 sec, repeat 4x.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Tuesday · Day 02</div>
+        <div class="day-title-area">
+          <div class="day-name">Pull A <span>Back · Biceps</span></div>
+          <div class="day-badges"><span class="badge badge-blue">Pre-Exhaust Supersets</span><span class="badge badge-red">5 × 8–12</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A1: Straight-Arm Pulldown (15 reps)</span><span class="ex-sets">5 rounds</span></div>
+          <div class="ex-glass-tip">Pre-exhaust lat with no bicep involvement. By the time you pull, lats are already firing — biceps become the weak link, not the lat.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A2: Wide-Grip Lat Pulldown (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">Immediately after pulldown. Lats are pre-fatigued — compound movement hits deeper fibers. Slow eccentric mandatory. Scapula retraction first.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B1: Pullover Machine (12 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Arms straight throughout. Targets serratus and lat lower insertion. Into B2 immediately after last rep.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B2: Single-Arm DB Row (10/side)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">Unilateral after pullover. Glass insists on unilateral for symmetry detection. Feel each side independently — is one pulling harder? Correct it.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS C1: Preacher Curl (12 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Bicep pre-exhaust. Short-head bias. Slow negative, hold at bottom just short of extension. Into C2 immediately.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS C2: Standing Barbell Curl (8–10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">After preacher, biceps are exhausted. No body swing allowed — if you have to cheat, weight is too heavy. Glass: "Cheating means you missed the point."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Wednesday · Day 03</div>
+        <div class="day-title-area">
+          <div class="day-name">Legs A <span>Quads · Hamstrings</span></div>
+          <div class="day-badges"><span class="badge badge-gold">Peak Intensity</span><span class="badge badge-green">5 × 8–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A1: Leg Extension (15 reps)</span><span class="ex-sets">5 rounds</span></div>
+          <div class="ex-glass-tip">Pre-exhaust quads completely. Every rep: 2-sec hold at top. After 5 sets of this, your quads are begging. Now you squat.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A2: Hack Squat (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">Immediately into the hack squat. You'll use less weight — that's fine. The quad is so pre-fatigued that light weight creates the same stimulus as heavy uninhibited squatting.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B1: Lying Leg Curl (12 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Hamstring pre-exhaust. Plantarflex, 4-sec negative. Into B2 immediately.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B2: Romanian Deadlift (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">After leg curl, hamstrings are pre-exhausted. The RDL compound now forces hamstrings past fatigue. 5-sec lowering. You'll feel it like never before.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Bulgarian Split Squat (Heavy)</span><span class="ex-sets">4 × 8/leg</span></div>
+          <div class="ex-glass-tip">Now unilateral work. Both quads and hams already fatigued. Long stride, slow descent. Find your balance and own it. No rushing between legs.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Calf Raise Tri-Set (3 angles)</span><span class="ex-sets">3 × 20 × 3</span></div>
+          <div class="ex-glass-tip">Toes straight → toes out → toes in, no rest between angles. 60 total reps per set. 3 rounds. Glass: calves respond to high frequency and varied angles.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Thursday · Day 04</div>
+        <div class="day-title-area">
+          <div class="day-name">Push B <span>Shoulders · Triceps</span></div>
+          <div class="day-badges"><span class="badge badge-purple">Pre-Exhaust SS</span><span class="badge badge-red">5 × 8–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A1: Cable Lateral Raise (15 reps)</span><span class="ex-sets">5 rounds</span></div>
+          <div class="ex-glass-tip">Pre-exhaust lateral delt before pressing. Lead with pinky. 2-sec hold at peak. Into A2 immediately.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A2: Seated DB Shoulder Press (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">After lateral pre-exhaust, the lateral delt — not the front delt — drives the press. Elbows slightly in front. Stop before lockout. Repeat 5x.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B1: Bent-Over Rear Delt Fly (20 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Rear delt pre-exhaust. Light weight, full external rotation at peak. Torso at 90°. Into B2 immediately.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B2: Face Pull (20 reps)</span><span class="ex-sets">→ 60 sec rest</span></div>
+          <div class="ex-glass-tip">After rear delt fly, into face pull. This combination fully annihilates the posterior shoulder. Rotator cuff gets trained too. Rest 60 sec, repeat 4x.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS C1: Overhead Cable Extension (12 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Long head pre-exhaust. Arms stay pinned to ears. Into C2 immediately.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS C2: Close-Grip Bench Press (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">After overhead ext, triceps are pre-fatigued. Close grip press hits all three heads hard. Even moderate weight will feel extremely heavy. Controlled at all times.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Friday · Day 05</div>
+        <div class="day-title-area">
+          <div class="day-name">Pull B <span>Back Density · Biceps</span></div>
+          <div class="day-badges"><span class="badge badge-blue">Pre-Exhaust SS</span><span class="badge badge-red">5 × 8–12</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A1: Pullover Machine (15 reps)</span><span class="ex-sets">5 rounds</span></div>
+          <div class="ex-glass-tip">Isolates lat/serratus. Full stretch. Into A2 with no rest.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A2: Underhand Lat Pulldown (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">After pullover, lat is pre-exhausted. Underhand grip = stronger bicep position = heavier lat load. Squeeze at bottom, full stretch at top. Repeat 5x.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B1: Face Pull (20 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Rear delt and external rotator pre-activation. Into B2 immediately.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B2: Chest-Supported Row (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">Rear delt pre-fired, now a compound row hits mid-back and rear delt together. Elbows flared. Drive elbows up and back. Hold 1 sec at peak. Repeat 4x.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS C1: Spider Curl (12 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Long head pre-exhaust. Incline bench, chest down, arms hanging. Full stretch. Supinate hard at top. Into C2.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS C2: Standing Cable Curl (10 reps)</span><span class="ex-sets">→ 75 sec rest</span></div>
+          <div class="ex-glass-tip">After spider curl, biceps are obliterated. Cable keeps tension at full extension. No body swing. Squeeze hard at peak. This is your peak bicep week. Give everything.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Saturday · Day 06</div>
+        <div class="day-title-area">
+          <div class="day-name">Legs B <span>Glutes · Hamstrings · Calves</span></div>
+          <div class="day-badges"><span class="badge badge-gold">Pre-Exhaust SS</span><span class="badge badge-green">5 × 8–15</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A1: Cable Glute Kickback (15 reps/leg)</span><span class="ex-sets">5 rounds</span></div>
+          <div class="ex-glass-tip">Full glute isolation. 2-sec squeeze at peak. After 5 sets each leg, glutes are fully pre-exhausted. Into A2 without rest.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS A2: Barbell Hip Thrust (12 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">After kickback pre-exhaust, glutes are already firing maximally. The hip thrust now creates an unprecedented glute stimulus. 3-sec pause at top. Repeat 5x.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B1: Seated Leg Curl (15 reps)</span><span class="ex-sets">4 rounds</span></div>
+          <div class="ex-glass-tip">Hamstring pre-exhaust. Full stretch, plantarflex, hold at top 2 sec. Into B2.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">SS B2: Romanian Deadlift (10 reps)</span><span class="ex-sets">→ 90 sec rest</span></div>
+          <div class="ex-glass-tip">Pre-fatigued hamstrings now do an RDL. 5-sec lowering. Feel the tendon stretch. You'll use less weight — that's exactly the point. Repeat 4x.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Bulgarian Split Squat (Bodyweight + Pause)</span><span class="ex-sets">3 × 10/leg</span></div>
+          <div class="ex-glass-tip">After intense SS work, bodyweight split squat with 3-sec pause at bottom. Pure stretch and contraction. Form over everything. Feel the glute load completely.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Calf Raise Tri-Set (3 angles, 5 sec ecc.)</span><span class="ex-sets">4 × 20 × 3</span></div>
+          <div class="ex-glass-tip">5-second negative every single rep, all three angles. This is peak calf week. If your calves aren't growing, it's because you haven't been here on a Saturday doing this.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Sunday · Day 07</div>
+        <div class="day-title-area">
+          <div class="day-name">Rest Day <span>Recovery</span></div>
+          <div class="day-badges"><span class="badge badge-rest">Mandatory</span></div>
+        </div>
+      </div>
+      <div class="rest-block">
+        <div class="rest-icon">🔥</div>
+        <div class="rest-title">Earned Rest</div>
+        <div class="rest-desc">After the hardest week of the cycle — full rest is mandatory, not optional. Eat above maintenance. Sleep 9 hours if you can. The supercompensation from this week is where the real size comes from.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="coaching-note">
+    <div class="cn-icon">💬</div>
+    <div class="cn-content">
+      <div class="cn-title">Glass Coaching Cue — Week 3</div>
+      <div class="cn-text">"<strong>When I pre-exhaust a muscle, then go to the compound — the muscle has no choice but to work.</strong> It can't hide behind the stronger muscles anymore. That's the secret. You're not just tired, you're specifically tired in the right place. That's where growth comes from — specific, targeted exhaustion."</div>
+    </div>
+  </div>
+
+  <div class="nutrition-row">
+    <div class="nut-cell"><div class="nut-val">3,700</div><div class="nut-lbl">Calories</div><div class="nut-note">Peak week — eat aggressively</div></div>
+    <div class="nut-cell"><div class="nut-val">240g</div><div class="nut-lbl">Protein</div><div class="nut-note">Synthesis at maximum</div></div>
+    <div class="nut-cell"><div class="nut-val">430g</div><div class="nut-lbl">Carbs</div><div class="nut-note">Supersets demand glycogen</div></div>
+    <div class="nut-cell"><div class="nut-val">85g</div><div class="nut-lbl">Fats</div><div class="nut-note">Hormonal baseline</div></div>
+  </div>
+  <div class="spacer"></div>
+</div>
+
+<!-- ══════════ WEEK 4 ══════════ -->
+<div class="week-panel" id="week-4">
+  <div class="week-intro">
+    <div class="wi-left">
+      <div class="wi-phase">Phase 04 of 04</div>
+      <div class="wi-title">Deload &<br>Consolidation</div>
+      <div class="wi-desc">Volume drops 40%, but intensity and Glass principles remain fully intact. Slow eccentrics, peak contractions, and perfect form — every rep. This is not a rest week from technique, it's a rest week from volume. The body supercompensates during deload, locking in the gains from Weeks 1–3.</div>
+    </div>
+    <div class="wi-right">
+      <div class="wi-param"><span class="wi-param-key">Sets × Reps</span><span class="wi-param-val">3 × 12–15</span></div>
+      <div class="wi-param"><span class="wi-param-key">Eccentric</span><span class="wi-param-val">3–4 sec (same)</span></div>
+      <div class="wi-param"><span class="wi-param-key">Rest</span><span class="wi-param-val">90 sec</span></div>
+      <div class="wi-param"><span class="wi-param-key">Volume vs W3</span><span class="wi-param-val">–40%</span></div>
+      <div class="wi-param"><span class="wi-param-key">Intensity</span><span class="wi-param-val">RPE 6–7</span></div>
+      <div class="wi-param"><span class="wi-param-key">Focus</span><span class="wi-param-val">Form + Recovery</span></div>
+    </div>
+  </div>
+
+  <div class="days-container">
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Monday · Day 01</div>
+        <div class="day-title-area">
+          <div class="day-name">Push A <span>Chest · Triceps — Deload</span></div>
+          <div class="day-badges"><span class="badge badge-gold">3 × 12–15</span><span class="badge badge-rest">RPE 6–7</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Fly (Low-to-High)</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">Still pre-exhaust. Still slow. Still feeling every inch. Just 3 sets instead of 5. Use this week to perfect your form — feel things you rushed past in Week 3.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Incline DB Press (30°)</span><span class="ex-sets">3 × 12</span></div>
+          <div class="ex-glass-tip">Same form, lighter weight. 4-sec negative. Focus on the mind-muscle connection you've built — this week you refine it. No ego, just feel.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Pec Deck</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">2-sec hold every rep at peak. Deload doesn't mean lazy reps — it means perfect reps at lower volume.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Overhead Cable Tricep Extension</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">Long head stretch. Stay strict. Elbows pinned. 3 sets is enough to maintain and recover simultaneously.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Rope Pushdown</span><span class="ex-sets">3 × 20</span></div>
+          <div class="ex-glass-tip">Light and perfect. Split the rope wide. This is your flush set — blood into the tricep, joints lubricated, recovery accelerated.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Tuesday · Day 02</div>
+        <div class="day-title-area">
+          <div class="day-name">Pull A <span>Back · Biceps — Deload</span></div>
+          <div class="day-badges"><span class="badge badge-blue">3 × 12–15</span><span class="badge badge-rest">RPE 6–7</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Straight-Arm Pulldown</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">Full stretch, full contraction. 3 sets. The lat is still being trained — just recovering at the same time. That's the beauty of a proper deload.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Wide-Grip Lat Pulldown</span><span class="ex-sets">3 × 12</span></div>
+          <div class="ex-glass-tip">Perfect form week. Every rep: retract scapulae before pulling. If this cue hasn't clicked yet, this is the week it will — slower, more deliberate.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Seated Row (V-Bar)</span><span class="ex-sets">3 × 12</span></div>
+          <div class="ex-glass-tip">Full protraction stretch, full retraction squeeze. Light enough to hold at peak for 2 sec every rep.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Incline DB Curl</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">Long head, full stretch, perfect supination. You've built the connection — now just feel it without fighting heavy weight.</div>
+        </div>
+        <div class="ex-cell">
+          <div class="ex-top"><span class="ex-name">Cable Curl (Both Arms)</span><span class="ex-sets">3 × 15</span></div>
+          <div class="ex-glass-tip">Light flush. Constant tension throughout ROM. Hold peak 2 sec. Deload bicep work still builds — the neural signal is still there.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Wednesday · Day 03</div>
+        <div class="day-title-area">
+          <div class="day-name">Legs A <span>Quads · Hamstrings — Deload</span></div>
+          <div class="day-badges"><span class="badge badge-gold">3 × 12–15</span><span class="badge badge-rest">RPE 6–7</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Leg Extension</span><span class="ex-sets">3 × 15</span></div><div class="ex-glass-tip">2-sec hold, point toes out slightly. 3 sets only. Still pre-exhausting quad before leg press.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Hack Squat (Light)</span><span class="ex-sets">3 × 12</span></div><div class="ex-glass-tip">Use 60–70% of Week 3 weight. 4-sec negative mandatory. Perfect form focus. Joints recover during deload — treat them well.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Romanian Deadlift</span><span class="ex-sets">3 × 12</span></div><div class="ex-glass-tip">Slow descent (5 sec). Feel the hamstring load completely. Light enough to feel the stretch clearly — not fight the weight.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Seated Leg Curl</span><span class="ex-sets">3 × 15</span></div><div class="ex-glass-tip">Plantarflex, 4-sec negative. Light and full ROM. Hamstrings get flushed with blood, accelerating recovery.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Standing Calf Raise (Single Leg)</span><span class="ex-sets">3 × 20/leg</span></div><div class="ex-glass-tip">Full stretch, 2-sec peak hold. Even deload calves deserve the Glass treatment. Never a lazy calf raise.</div></div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Thursday · Day 04</div>
+        <div class="day-title-area">
+          <div class="day-name">Push B <span>Shoulders · Triceps — Deload</span></div>
+          <div class="day-badges"><span class="badge badge-purple">3 × 12–15</span><span class="badge badge-rest">RPE 6–7</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Cable Lateral Raise</span><span class="ex-sets">3 × 20</span></div><div class="ex-glass-tip">Very light, very slow. Lead with pinky, 2-sec hold. Deload delts with high rep, low weight. Best way to keep the connection while resting the joints.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Seated DB Shoulder Press</span><span class="ex-sets">3 × 12</span></div><div class="ex-glass-tip">Stop before lockout. Light enough to feel every delt head separately. This is technique refinement week for pressing mechanics.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Bent-Over Rear Delt Fly</span><span class="ex-sets">3 × 20</span></div><div class="ex-glass-tip">High rep, light weight. Rear delts get constant work — they recover fast and respond well to frequency even in deload.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Face Pull</span><span class="ex-sets">3 × 25</span></div><div class="ex-glass-tip">Deload actually increases face pull reps — rotator cuff work accelerates shoulder recovery. Never skip. External rotation every rep.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Overhead Cable Extension</span><span class="ex-sets">3 × 15</span></div><div class="ex-glass-tip">Long head flush. Arms behind head, 4-sec negative. Light weight, full ROM. Joint recovery while maintaining neural connection.</div></div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Friday · Day 05</div>
+        <div class="day-title-area">
+          <div class="day-name">Pull B <span>Back · Biceps — Deload</span></div>
+          <div class="day-badges"><span class="badge badge-blue">3 × 12–15</span><span class="badge badge-rest">RPE 6–7</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Pullover Machine</span><span class="ex-sets">3 × 15</span></div><div class="ex-glass-tip">Full stretch. Arms straight. The deload version is perfect for the serratus and lat connection you've been building.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Single-Arm DB Row</span><span class="ex-sets">3 × 12/side</span></div><div class="ex-glass-tip">Light, unilateral, perfect form. Feel each side independently. Compare left vs right — is the mind-muscle connection equal on both sides?</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Face Pull</span><span class="ex-sets">3 × 25</span></div><div class="ex-glass-tip">Rear delt and rotator cuff flush. Done twice this week in deload — Glass always programs this for shoulder health and longevity.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Preacher Curl</span><span class="ex-sets">3 × 15</span></div><div class="ex-glass-tip">Light, strict, no cheating. Deload is the perfect time to clean up bicep form — no heavy weight means no temptation to swing.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Hammer Curl (Alternating)</span><span class="ex-sets">3 × 12/arm</span></div><div class="ex-glass-tip">Brachialis flush. Slow and deliberate. Slight cross-body for better brachialis peak. No rushing.</div></div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Saturday · Day 06</div>
+        <div class="day-title-area">
+          <div class="day-name">Legs B <span>Glutes · Hamstrings — Deload</span></div>
+          <div class="day-badges"><span class="badge badge-gold">3 × 12–15</span><span class="badge badge-rest">RPE 6–7</span></div>
+        </div>
+      </div>
+      <div class="exercises-grid">
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Cable Glute Kickback</span><span class="ex-sets">3 × 15/leg</span></div><div class="ex-glass-tip">Light, full squeeze, 2-sec hold. Pre-exhaust glute even in deload — the pattern is now habitual. Maintain the connection.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Barbell Hip Thrust (Light + Pause)</span><span class="ex-sets">3 × 12</span></div><div class="ex-glass-tip">2-sec pause at top. Lighter bar, but the pause demands full glute activation regardless of load. Feel the pelvic tuck completely.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Bulgarian Split Squat (Bodyweight)</span><span class="ex-sets">3 × 12/leg</span></div><div class="ex-glass-tip">No weight. Long stride. 4-sec descent. Deload split squat is excellent for hip flexor recovery and glute pattern reinforcement.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Lying Leg Curl</span><span class="ex-sets">3 × 15</span></div><div class="ex-glass-tip">Plantarflex, slow negative. Light enough to feel the full hamstring belly contract, not just the tendon tug.</div></div>
+        <div class="ex-cell"><div class="ex-top"><span class="ex-name">Seated Calf Raise (Slow)</span><span class="ex-sets">4 × 20</span></div><div class="ex-glass-tip">Even in deload, Glass doesn't let calves off easy. 4-sec negative, 2-sec peak hold. Full range. Calves respond to consistency above all else.</div></div>
+      </div>
+    </div>
+
+    <div class="day-block">
+      <div class="day-top">
+        <div class="day-num-col">Sunday · Day 07</div>
+        <div class="day-title-area">
+          <div class="day-name">Rest Day <span>Cycle Complete</span></div>
+          <div class="day-badges"><span class="badge badge-rest">Mandatory</span></div>
+        </div>
+      </div>
+      <div class="rest-block">
+        <div class="rest-icon">🏆</div>
+        <div class="rest-title">Cycle Complete.</div>
+        <div class="rest-desc">You've completed the 4-week Glass GOB method. Assess your body, take measurements, and note strength gains. After 1–2 days full rest, begin the next cycle — increase baseline loads by 5–10% and repeat. The muscle was built this week. Trust the process.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="coaching-note">
+    <div class="cn-icon">💬</div>
+    <div class="cn-content">
+      <div class="cn-title">Glass Coaching Cue — Week 4 (Deload)</div>
+      <div class="cn-text">"<strong>The deload is where champions are made — not the heavy weeks.</strong> Everyone trains hard. Not everyone recovers smart. Your muscles don't grow in the gym. They grow when you're sleeping, when you're eating, when you're not training. This week you give your body permission to become what you asked it to be."</div>
+    </div>
+  </div>
+
+  <div class="nutrition-row">
+    <div class="nut-cell"><div class="nut-val">3,100</div><div class="nut-lbl">Calories</div><div class="nut-note">Slight maintenance cut</div></div>
+    <div class="nut-cell"><div class="nut-val">220g</div><div class="nut-lbl">Protein</div><div class="nut-note">Preserve all muscle</div></div>
+    <div class="nut-cell"><div class="nut-val">340g</div><div class="nut-lbl">Carbs</div><div class="nut-note">Moderate glycogen</div></div>
+    <div class="nut-cell"><div class="nut-val">75g</div><div class="nut-lbl">Fats</div><div class="nut-note">Recovery support</div></div>
+  </div>
+  <div class="spacer"></div>
+</div><!-- end week-4 -->
+
+</div><!-- end suppl-ppl -->
+
+<!-- ══════════════════════════════════════
+     ABS PANEL
+══════════════════════════════════════ -->
+<div id="suppl-abs" class="suppl-panel">
+  <div class="abs-section">
+
+    <div class="morning-banner">
+      <div class="mb-time">6:00 – 8:30 AM</div>
+      <div class="mb-divider"></div>
+      <div class="mb-info">
+        <div class="mb-label">Abs are trained at the END of session</div>
+        <div class="mb-desc">Mon (Push A), Wed (Legs A), Fri (Pull B) · ~15–20 min appended · Total: 3× per week</div>
+      </div>
+    </div>
+
+    <div class="suppl-intro">
+      <div class="suppl-desc">
+        <div class="section-eyebrow">Charles Glass · Core Protocol</div>
+        <div class="section-title">Abs Program</div>
+        <p>Glass trains abs with the same philosophy as every other muscle — constant tension, full stretch, peak contraction, controlled tempo. He avoids hip-flexor-dominant movements and focuses on isolating the rectus abdominis and obliques through deliberate positioning. Vacuum work is programmed for transverse abdominis, giving that narrow-waist GOB aesthetic.</p>
+      </div>
+      <div class="suppl-params">
+        <div class="suppl-param"><span class="sp-k">Frequency</span><span class="sp-v">3× / week</span></div>
+        <div class="suppl-param"><span class="sp-k">Position in Session</span><span class="sp-v">End of workout</span></div>
+        <div class="suppl-param"><span class="sp-k">Duration</span><span class="sp-v">15–20 min</span></div>
+        <div class="suppl-param"><span class="sp-k">Tempo</span><span class="sp-v">2-0-2-1 base</span></div>
+        <div class="suppl-param"><span class="sp-k">Rest Between Sets</span><span class="sp-v">30–45 sec</span></div>
+        <div class="suppl-param"><span class="sp-k">Days</span><span class="sp-v">Mon · Wed · Fri</span></div>
+      </div>
+    </div>
+
+    <!-- Abs Exercises -->
+    <div class="suppl-ex-list">
+
+      <!-- 1: Hanging Leg Raise -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">01</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Hanging Leg Raise</span>
+            <span class="suppl-ex-sets">4 × 12–15</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">4</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">12–15</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">2-0-2-1</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">45 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Dead hang, legs straight or slightly bent. Drive knees toward chest by posteriorly tilting the pelvis FIRST — not by swinging. Squeeze the lower abs at the top, hold 1 sec. Lower with complete control. Never use momentum. If you feel it in your hip flexors, you're not tilting the pelvis.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2: Cable Crunch -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">02</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Cable Crunch (Kneeling)</span>
+            <span class="suppl-ex-sets">4 × 15–20</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">4</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">15–20</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">1-0-3-1</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">30 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Kneel facing the cable, rope at forehead. The movement is NOT pulling your head down — it's <strong>curling your ribcage toward your pelvis</strong>. Elbows stay fixed beside your head throughout. Slow 3-sec eccentric as you rise. Glass: "Think of shortening the distance between your sternum and your navel — that's the only job of this exercise."</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3: Decline Sit-Up -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">03</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Decline Sit-Up (Controlled)</span>
+            <span class="suppl-ex-sets">3 × 15–20</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">3</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">15–20</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">3-1-1-1</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">40 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Moderate decline angle (30–40°). Hands across chest or lightly behind head — never pulling the neck. Lower all the way to full stretch at the bottom — 3-sec controlled negative is where the growth stimulus is. Pause at full stretch for 1 sec. Curl up without jerking. Do NOT anchor with hip flexors by pulling with the legs — let the abs drive the curl.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4: Ab Wheel Rollout -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">04</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Ab Wheel Rollout</span>
+            <span class="suppl-ex-sets">3 × 8–12</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">3</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">8–12</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">3-1-2-0</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">60 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Roll out slowly — 3 full seconds. At full extension: posterior pelvic tilt maintained (don't let lower back collapse). Pull back using abdominal contraction, not arm strength. This trains the rectus abdominis through its entire stretch-to-contract range. Start from knees if needed — Glass always prioritizes perfect tension over ego ROM.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5: Vacuum / Stomach Vacuum -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">05</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Stomach Vacuum (Transverse Abdominis)</span>
+            <span class="suppl-ex-sets">3 × 30–60 sec hold</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">3</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Hold</span><span class="smc-v">30–60 sec</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">30 sec</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Breathing</span><span class="smc-v">Exhale + hold</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue (GOB Signature):</strong> Exhale fully, draw navel toward spine as if trying to touch your belly button to your backbone. Hold the contraction — do NOT hold your breath; breathe shallow while maintaining the vacuum. Glass programs this at the END of every ab session. The transverse ab is the body's natural weight belt — train it for the narrow-waist aesthetic and to protect the spine under all heavy loading.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6: Cable Oblique Crunch (Bonus) -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">06</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Cable Oblique Crunch (Standing)</span>
+            <span class="suppl-ex-sets">3 × 15 / side</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">3 / side</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">15</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">1-0-2-1</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">30 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Cable at high pulley, one-hand grip, side-bend laterally. <strong>The key:</strong> hold the peak contraction for 1 full second at the bottom before returning. Don't let the cable pull you past neutral at the top — control the stretch. Glass: "The obliques tie your upper and lower body together — they must be trained precisely, not with sloppy side bends." Unilateral work only for symmetry.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end abs ex list -->
+
+    <!-- Abs Weekly Schedule -->
+    <div class="suppl-weekly-sched">
+      <div class="section-eyebrow">Abs Schedule</div>
+      <div class="section-title" style="font-size:22px;margin-bottom:0">When Abs Fit Into the Week</div>
+      <div class="swsch-grid">
+        <div class="swsch-cell">
+          <div class="swsch-day swsch-active">Monday</div>
+          <div class="swsch-label">After Push A</div>
+          <div class="swsch-note">Cable Crunch + Hanging Leg Raise + Vacuum · ~15 min</div>
+        </div>
+        <div class="swsch-cell" style="opacity:0.4">
+          <div class="swsch-day">Tuesday</div>
+          <div class="swsch-label" style="color:var(--muted)">—</div>
+          <div class="swsch-note">Pull day · No abs (recovery)</div>
+        </div>
+        <div class="swsch-cell">
+          <div class="swsch-day swsch-active">Wednesday</div>
+          <div class="swsch-label">After Legs A</div>
+          <div class="swsch-note">Decline Sit-Up + Ab Wheel + Oblique + Vacuum · ~18 min</div>
+        </div>
+        <div class="swsch-cell" style="opacity:0.4">
+          <div class="swsch-day">Thursday</div>
+          <div class="swsch-label" style="color:var(--muted)">—</div>
+          <div class="swsch-note">Push B · No abs (48hr gap)</div>
+        </div>
+        <div class="swsch-cell">
+          <div class="swsch-day swsch-active">Friday</div>
+          <div class="swsch-label">After Pull B</div>
+          <div class="swsch-note">Full Abs Circuit · All 6 exercises · ~20 min</div>
+        </div>
+        <div class="swsch-cell" style="opacity:0.4">
+          <div class="swsch-day">Sat–Sun</div>
+          <div class="swsch-label" style="color:var(--muted)">—</div>
+          <div class="swsch-note">Legs B + Rest · Abs recover</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- end suppl-abs -->
+
+<!-- ══════════════════════════════════════
+     FOREARMS PANEL
+══════════════════════════════════════ -->
+<div id="suppl-forearms" class="suppl-panel">
+  <div class="forearms-section">
+
+    <div class="morning-banner">
+      <div class="mb-time">6:00 – 8:30 AM</div>
+      <div class="mb-divider"></div>
+      <div class="mb-info">
+        <div class="mb-label">Forearms trained at end of Pull / Push B sessions</div>
+        <div class="mb-desc">Tuesday (Pull A) · Thursday (Push B) · ~12–15 min appended · Total: 2× per week</div>
+      </div>
+    </div>
+
+    <div class="suppl-intro">
+      <div class="suppl-desc">
+        <div class="section-eyebrow">Charles Glass · Forearm Protocol</div>
+        <div class="section-title">Forearms Program</div>
+        <p>Glass trains forearms with the same precision as any other muscle. He uses full range of motion wrist curls with constant cable tension where possible, emphasises the stretch at the bottom, and trains both flexor and extensor compartments for balanced development. Hammer curls are classified here as a brachialis and brachioradialis movement. Farmer carries train grip endurance and forearm density simultaneously.</p>
+      </div>
+      <div class="suppl-params">
+        <div class="suppl-param"><span class="sp-k">Frequency</span><span class="sp-v">2× / week</span></div>
+        <div class="suppl-param"><span class="sp-k">Position</span><span class="sp-v">End of session</span></div>
+        <div class="suppl-param"><span class="sp-k">Duration</span><span class="sp-v">12–15 min</span></div>
+        <div class="suppl-param"><span class="sp-k">Tempo</span><span class="sp-v">2-1-2-1 base</span></div>
+        <div class="suppl-param"><span class="sp-k">Rest</span><span class="sp-v">30–45 sec</span></div>
+        <div class="suppl-param"><span class="sp-k">Days</span><span class="sp-v">Tue (Pull A) · Thu (Push B)</span></div>
+      </div>
+    </div>
+
+    <!-- Forearm Exercises -->
+    <div class="suppl-ex-list">
+
+      <!-- 1: Wrist Curl -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">01</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Seated Wrist Curl (Barbell or DB)</span>
+            <span class="suppl-ex-sets">4 × 15–20</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">4</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">15–20</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">2-1-2-1</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">30 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Forearms resting on thighs, wrists hanging off the knees. Palms up. Lower the bar fully — let fingers open slightly at the bottom for maximum flexor stretch. Curl up to full contraction, hold 1 sec. Glass: "Let the weight roll down to your fingertips — that stretch at the bottom is where forearm development comes from. Most people never get that stretch because they don't go low enough."</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2: Reverse Wrist Curl -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">02</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Reverse Wrist Curl (Extensor Focus)</span>
+            <span class="suppl-ex-sets">3 × 15–20</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">3</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">15–20</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">2-0-2-1</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">30 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Same position as wrist curl but palms DOWN (pronated). Curl knuckles up toward the ceiling, squeezing the extensor compartment. This is typically weaker than flexors — use lighter weight. Full range is critical: let wrists drop completely at the bottom. Extensor training balances flexors and prevents wrist injury under heavy pressing loads.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3: Reverse Barbell Curl -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">03</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Reverse Barbell / EZ-Bar Curl</span>
+            <span class="suppl-ex-sets">4 × 10–12</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">4</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">10–12</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">3-0-2-1</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">45 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Overhand (pronated) grip, shoulder-width. Elbows pinned to sides — no swinging. This hits the brachioradialis heavily and builds the outer forearm thickness visible from the front. Slow 3-sec eccentric. Wrists stay neutral throughout — don't let them break forward at the top. EZ-bar reduces wrist strain while maintaining the pronation needed for brachioradialis recruitment.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4: Hammer Curl (Brachioradialis Focus) -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">04</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Hammer Curl — Cross-Body (Brachioradialis)</span>
+            <span class="suppl-ex-sets">4 × 12 / arm</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">4 / arm</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">12</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">2-0-2-1</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">40 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Neutral grip, curl across the body (not straight up). Cross-body path increases brachioradialis recruitment versus straight hammer curl. Elbow stays at side — Glass: "The elbow is the hinge, everything else is fixed." Thumb facing ceiling at the top. Slow eccentric lets you feel the brachioradialis loading from the stretched position. Alternate arms, don't rush.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5: Cable Wrist Curl (Constant Tension) -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">05</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Low Cable Wrist Curl (Constant Tension)</span>
+            <span class="suppl-ex-sets">3 × 20</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">3</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Reps</span><span class="smc-v">20</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Tempo</span><span class="smc-v">1-0-2-1</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">30 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Low cable pulley, seated with forearm resting on thigh. <strong>Glass always prefers cable over dumbbell for isolation</strong> because the constant tension loads the forearm flexors throughout the full ROM — at the bottom stretch, dumbbells go slack, cable never does. Light weight, high reps, maximum pump. Use this as a finishing flush after the heavier work.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6: Farmer Carry -->
+      <div class="suppl-ex-row" onclick="toggleSupplEx(this)">
+        <div class="suppl-ex-num">06</div>
+        <div class="suppl-ex-body">
+          <div class="suppl-ex-top">
+            <span class="suppl-ex-name">Farmer Carry (Grip Density)</span>
+            <span class="suppl-ex-sets">3 × 30–40 m</span>
+          </div>
+          <div class="suppl-expand-hint">▸ tap to expand</div>
+          <div class="suppl-ex-detail">
+            <div class="suppl-meta-row">
+              <div class="suppl-meta-cell"><span class="smc-k">Sets</span><span class="smc-v">3</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Distance</span><span class="smc-v">30–40 m</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Load</span><span class="smc-v">Heavy DBs</span></div>
+              <div class="suppl-meta-cell"><span class="smc-k">Rest</span><span class="smc-v">60 sec</span></div>
+            </div>
+            <div class="suppl-glass-cue"><strong>Glass Cue:</strong> Heaviest dumbbells you can hold with straight wrists. Walk upright — chest up, shoulders back and down, never hunching. This trains the deep forearm flexors and the flexor digitorum profundus (the muscle responsible for grip crushing strength and forearm density from the back). Glass uses farmer carries as a <strong>finisher</strong> — already fatigued forearms plus a heavy isometric carry creates a powerful hypertrophy stimulus.</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end forearms ex list -->
+
+    <!-- Forearms Weekly Schedule -->
+    <div class="suppl-weekly-sched">
+      <div class="section-eyebrow">Forearms Schedule</div>
+      <div class="section-title" style="font-size:22px;margin-bottom:0">When Forearms Fit Into the Week</div>
+      <div class="swsch-grid">
+        <div class="swsch-cell" style="opacity:0.4">
+          <div class="swsch-day">Monday</div>
+          <div class="swsch-label" style="color:var(--muted)">—</div>
+          <div class="swsch-note">Push A + Abs · Forearms skip</div>
+        </div>
+        <div class="swsch-cell">
+          <div class="swsch-day swsch-active">Tuesday</div>
+          <div class="swsch-label">After Pull A</div>
+          <div class="swsch-note">Wrist Curl + Reverse Curl + Hammer Curl · ~12 min</div>
+        </div>
+        <div class="swsch-cell" style="opacity:0.4">
+          <div class="swsch-day">Wednesday</div>
+          <div class="swsch-label" style="color:var(--muted)">—</div>
+          <div class="swsch-note">Legs A + Abs · No forearms</div>
+        </div>
+        <div class="swsch-cell">
+          <div class="swsch-day swsch-active">Thursday</div>
+          <div class="swsch-label">After Push B</div>
+          <div class="swsch-note">Reverse Curl + Cable Wrist + Hammer + Farmer Carry · ~15 min</div>
+        </div>
+        <div class="swsch-cell" style="opacity:0.4">
+          <div class="swsch-day">Fri–Sun</div>
+          <div class="swsch-label" style="color:var(--muted)">—</div>
+          <div class="swsch-note">Pull B + Legs B + Rest · Forearms recover</div>
+        </div>
+        <div class="swsch-cell" style="background:var(--surface)">
+          <div class="swsch-day" style="color:var(--accent)">Note</div>
+          <div class="swsch-label" style="font-size:11px;color:var(--text)">48hr between sessions</div>
+          <div class="swsch-note">Tue + Thu gap allows full forearm recovery without overtraining grip</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div><!-- end suppl-forearms -->
+
+<script>
+  /* ─── PPL Week Tabs ─── */
+  function showWeek(n, btn) {
+    document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.week-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('week-' + n).classList.add('active');
+    btn.classList.add('active');
+    setTimeout(animateCards, 50);
+  }
+
+  function animateCards() {
+    const cards = document.querySelectorAll('.week-panel.active .day-block');
+    cards.forEach((c, i) => {
+      c.classList.remove('visible');
+      setTimeout(() => c.classList.add('visible'), i * 80);
+    });
+  }
+
+  /* ─── Supplementary Panel Tabs ─── */
+  function showSuppl(id, btn) {
+    document.querySelectorAll('.suppl-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.suppl-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('suppl-' + id).classList.add('active');
+    btn.classList.add('active');
+    if (id === 'ppl') setTimeout(animateCards, 80);
+  }
+
+  /* ─── Expandable Supplementary Exercise Rows ─── */
+  function toggleSupplEx(row) {
+    const wasOpen = row.classList.contains('open');
+    // close all in same list
+    row.closest('.suppl-ex-list').querySelectorAll('.suppl-ex-row.open').forEach(r => r.classList.remove('open'));
+    if (!wasOpen) row.classList.add('open');
+  }
+
+  function showPageTab(id, btn) {
+    document.querySelectorAll('.page-panel').forEach(panel => panel.classList.remove('active'));
+    document.querySelectorAll('.page-tab').forEach(tab => tab.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    btn.classList.add('active');
+    if (id === 'workout') setTimeout(animateCards, 80);
+  }
+
+  /* ─── Expandable PPL Exercise Cells ─── */
+  document.addEventListener('DOMContentLoaded', () => {
+    // Upgrade all ex-cells with expandable detail if they have a glass-tip
+    document.querySelectorAll('.ex-cell').forEach(cell => {
+      const tip = cell.querySelector('.ex-glass-tip');
+      const top = cell.querySelector('.ex-top');
+      const nameEl = cell.querySelector('.ex-name');
+      const setsEl = cell.querySelector('.ex-sets');
+      if (!tip || !top) return;
+
+      // Parse sets text for meta
+      const setsText = setsEl ? setsEl.textContent.trim() : '';
+      const tipText = tip.textContent.trim();
+
+      // Build expanded detail section
+      const detail = document.createElement('div');
+      detail.className = 'ex-detail';
+      detail.innerHTML = `
+        <div class="ex-meta-grid">
+          <div class="ex-meta-item"><span class="ex-meta-key">Sets × Reps</span><span class="ex-meta-val">${setsText}</span></div>
+          <div class="ex-meta-item"><span class="ex-meta-key">Tempo</span><span class="ex-meta-val">3-0-3-1</span></div>
+          <div class="ex-meta-item"><span class="ex-meta-key">Eccentric</span><span class="ex-meta-val">3–4 sec</span></div>
+          <div class="ex-meta-item"><span class="ex-meta-key">Rest</span><span class="ex-meta-val">60–90 sec</span></div>
+        </div>
+        <div class="ex-glass-cue">${tipText}</div>`;
+
+      // Add expand hint to top
+      const hint = document.createElement('div');
+      hint.className = 'ex-expand-toggle';
+      hint.innerHTML = '<span class="ex-expand-icon">▸ glass cue</span>';
+
+      tip.replaceWith(detail);
+      top.after(hint);
+
+      cell.addEventListener('click', () => {
+        const wasOpen = cell.classList.contains('open');
+        cell.closest('.exercises-grid').querySelectorAll('.ex-cell.open').forEach(c => c.classList.remove('open'));
+        if (!wasOpen) cell.classList.add('open');
+      });
+    });
+
+    setTimeout(animateCards, 100);
+  });
+</script>
+ </section>
+
+<section id="page-bmi" class="page-panel">
+<section class="tool-section">
+
+<div class="section-eyebrow">Fitness Tool</div>
+<div class="section-title">BMI Calculator</div>
+
+<div class="tool-card">
+
+<label>Height (cm)</label>
+<input type="number" id="height">
+
+<label>Weight (kg)</label>
+<input type="number" id="weight">
+
+<button onclick="calculateBMI()">Calculate BMI</button>
+
+<p id="bmiResult"></p>
+
+</div>
+</section>
+</section>
+<script>
+
+function calculateBMI(){
+
+let height = document.getElementById("height").value / 100;
+let weight = document.getElementById("weight").value;
+
+let bmi = weight / (height * height);
+
+document.getElementById("bmiResult").innerText =
+"Your BMI is " + bmi.toFixed(2);
+
+}
+
+function calculateProtein(){
+
+let weight = document.getElementById("bodyweight").value;
+
+let protein = weight * 2;
+
+document.getElementById("proteinResult").innerText =
+"You need about " + protein + " grams of protein daily.";
+
+}
+
+</script>
+<section id="page-protein" class="page-panel">
+<section class="tool-section">
+
+<div class="section-title">Daily Protein Calculator</div>
+
+<div class="tool-card">
+
+<label>Body Weight (kg)</label>
+<input type="number" id="bodyweight">
+
+<button onclick="calculateProtein()">Calculate Protein</button>
+
+<p id="proteinResult"></p>
+
+</div>
+</section>
+</section>
+<section id="page-meal" class="page-panel">
+<section class="diet-section">
+
+<div class="section-eyebrow">Nutrition Plan</div>
+<div class="section-title">Weekly Indian Diet Planner</div>
+<p class="diet-intro">Each day includes four meals with a simple recipe method, approximate serving size, and estimated nutrition so the planner is more practical to follow. Values are approximate and meant for general fitness planning.</p>
+
+<div class="diet-grid">
+
+<div class="diet-card">
+<h3>Monday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Oats Upma + 3 Egg Bhurji</div>
+<div class="meal-detail">Amount: 70 g oats, mixed vegetables, 3 eggs, 1 tsp oil</div>
+<div class="meal-recipe">Recipe: Dry roast oats, saute onion, carrot, beans, and green chili in a little oil, then cook with water and salt until fluffy. Scramble eggs separately with tomato, onion, and turmeric.</div>
+<div class="meal-nutrition">
+<span>420 kcal</span><span>26 g protein</span><span>38 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Brown Rice + Dal Tadka + Cucumber Salad</div>
+<div class="meal-detail">Amount: 1.5 cups cooked brown rice, 1 cup dal, 1 bowl salad</div>
+<div class="meal-recipe">Recipe: Pressure cook toor dal, then temper with cumin, garlic, tomato, and a little ghee. Serve with steamed brown rice and sliced cucumber.</div>
+<div class="meal-nutrition">
+<span>560 kcal</span><span>22 g protein</span><span>86 g carbs</span><span>12 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Roasted Chana + Buttermilk</div>
+<div class="meal-detail">Amount: 40 g roasted chana, 250 ml buttermilk</div>
+<div class="meal-recipe">Recipe: Serve dry roasted chana with chilled buttermilk seasoned with roasted cumin powder and mint.</div>
+<div class="meal-nutrition">
+<span>180 kcal</span><span>10 g protein</span><span>24 g carbs</span><span>4 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Paneer Bhurji + 2 Roti</div>
+<div class="meal-detail">Amount: 120 g paneer, 2 whole wheat roti, onion-tomato masala</div>
+<div class="meal-recipe">Recipe: Crumble paneer into sauteed onion, tomato, capsicum, and spices. Cook until coated and serve hot with fresh rotis.</div>
+<div class="meal-nutrition">
+<span>510 kcal</span><span>28 g protein</span><span>34 g carbs</span><span>27 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1670 kcal</span><span>Protein: 86 g</span><span>Carbs: 182 g</span><span>Fat: 61 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Tuesday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Vegetable Poha + Peanut Topping</div>
+<div class="meal-detail">Amount: 80 g poha, peas, onion, curry leaves, 15 g peanuts</div>
+<div class="meal-recipe">Recipe: Wash poha, then toss with sauteed mustard seeds, curry leaves, onion, peas, turmeric, and roasted peanuts. Finish with lemon.</div>
+<div class="meal-nutrition">
+<span>390 kcal</span><span>11 g protein</span><span>58 g carbs</span><span>12 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Grilled Chicken + Jeera Rice + Sauteed Beans</div>
+<div class="meal-detail">Amount: 150 g chicken breast, 1.5 cups rice, 1 cup beans</div>
+<div class="meal-recipe">Recipe: Marinate chicken with curd, chili, ginger-garlic, and grill until cooked. Serve with cumin rice and lightly sauteed beans.</div>
+<div class="meal-nutrition">
+<span>610 kcal</span><span>42 g protein</span><span>66 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Fruit Bowl + Greek Yogurt</div>
+<div class="meal-detail">Amount: 1 apple, 1 banana, 150 g yogurt</div>
+<div class="meal-recipe">Recipe: Chop fresh fruit and fold into chilled yogurt with cinnamon or a pinch of chia seeds if desired.</div>
+<div class="meal-nutrition">
+<span>240 kcal</span><span>12 g protein</span><span>38 g carbs</span><span>3 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Moong Dal + 2 Roti + Stir-Fry Bhindi</div>
+<div class="meal-detail">Amount: 1 cup moong dal, 2 roti, 1 cup bhindi</div>
+<div class="meal-recipe">Recipe: Simmer moong dal with ginger and tomato, then temper with cumin. Pair with rotis and okra stir-fried using minimal oil.</div>
+<div class="meal-nutrition">
+<span>470 kcal</span><span>20 g protein</span><span>58 g carbs</span><span>14 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1710 kcal</span><span>Protein: 85 g</span><span>Carbs: 220 g</span><span>Fat: 47 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Wednesday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Moong Dal Chilla + Mint Curd</div>
+<div class="meal-detail">Amount: 2 large chilla from 80 g soaked moong dal, 100 g curd</div>
+<div class="meal-recipe">Recipe: Blend soaked moong dal with ginger and chili, spread into chilla on a tawa, and cook on both sides. Serve with mint curd.</div>
+<div class="meal-nutrition">
+<span>360 kcal</span><span>22 g protein</span><span>36 g carbs</span><span>11 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Rajma Curry + Steamed Rice</div>
+<div class="meal-detail">Amount: 1.5 cups rajma, 1.25 cups rice</div>
+<div class="meal-recipe">Recipe: Pressure cook rajma, simmer in onion-tomato gravy with ginger-garlic and garam masala, then serve with steamed rice.</div>
+<div class="meal-nutrition">
+<span>590 kcal</span><span>21 g protein</span><span>94 g carbs</span><span>12 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Whey Protein Shake + Banana</div>
+<div class="meal-detail">Amount: 1 scoop whey, 250 ml milk, 1 banana</div>
+<div class="meal-recipe">Recipe: Blend whey with chilled milk and banana until smooth. Add ice if you want it thicker and colder.</div>
+<div class="meal-nutrition">
+<span>260 kcal</span><span>28 g protein</span><span>25 g carbs</span><span>4 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Paneer Salad Bowl</div>
+<div class="meal-detail">Amount: 120 g grilled paneer, lettuce, cucumber, tomato, corn</div>
+<div class="meal-recipe">Recipe: Grill paneer cubes with pepper and paprika, then toss with salad vegetables and lemon-curd dressing.</div>
+<div class="meal-nutrition">
+<span>410 kcal</span><span>24 g protein</span><span>20 g carbs</span><span>24 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1620 kcal</span><span>Protein: 95 g</span><span>Carbs: 175 g</span><span>Fat: 51 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Thursday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Besan Cheela + Paneer Filling</div>
+<div class="meal-detail">Amount: 2 cheela, 60 g paneer filling, mint chutney</div>
+<div class="meal-recipe">Recipe: Make a besan batter with onion, tomato, ajwain, and spices. Cook thin cheela and fill with lightly spiced crumbled paneer.</div>
+<div class="meal-nutrition">
+<span>430 kcal</span><span>24 g protein</span><span>34 g carbs</span><span>22 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Fish Curry + Red Rice</div>
+<div class="meal-detail">Amount: 150 g fish, 1.5 cups red rice, curry gravy</div>
+<div class="meal-recipe">Recipe: Simmer fish in a tomato-onion curry with ginger, garlic, and coriander. Serve with cooked red rice and a lime wedge.</div>
+<div class="meal-nutrition">
+<span>580 kcal</span><span>38 g protein</span><span>62 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Sprouts Chaat</div>
+<div class="meal-detail">Amount: 1 bowl moong sprouts, onion, tomato, lemon</div>
+<div class="meal-recipe">Recipe: Steam sprouts lightly, then toss with chopped vegetables, lemon juice, black salt, and coriander.</div>
+<div class="meal-nutrition">
+<span>190 kcal</span><span>12 g protein</span><span>28 g carbs</span><span>3 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Chicken Soup + 2 Phulka</div>
+<div class="meal-detail">Amount: 1.5 cups chicken soup, 2 phulka, mixed vegetables</div>
+<div class="meal-recipe">Recipe: Slow simmer chicken pieces with carrot, beans, pepper, and garlic for a light soup. Serve with phulka on the side.</div>
+<div class="meal-nutrition">
+<span>430 kcal</span><span>32 g protein</span><span>36 g carbs</span><span>12 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1630 kcal</span><span>Protein: 106 g</span><span>Carbs: 160 g</span><span>Fat: 55 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Friday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Idli + Sambar + Boiled Eggs</div>
+<div class="meal-detail">Amount: 3 idli, 1 cup sambar, 2 boiled eggs</div>
+<div class="meal-recipe">Recipe: Serve fresh idli with vegetable sambar and boiled eggs seasoned with black pepper and salt.</div>
+<div class="meal-nutrition">
+<span>440 kcal</span><span>23 g protein</span><span>48 g carbs</span><span>16 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Paneer Pulao + Raita</div>
+<div class="meal-detail">Amount: 1.5 cups paneer pulao, 1/2 cup cucumber raita</div>
+<div class="meal-recipe">Recipe: Cook basmati rice with paneer cubes, peas, carrot, and whole spices. Pair with simple cucumber-curd raita.</div>
+<div class="meal-nutrition">
+<span>620 kcal</span><span>25 g protein</span><span>72 g carbs</span><span>24 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Peanut Butter Toast + Milk</div>
+<div class="meal-detail">Amount: 2 whole wheat bread slices, 1 tbsp peanut butter, 200 ml milk</div>
+<div class="meal-recipe">Recipe: Toast bread, spread peanut butter evenly, and serve with warm or chilled milk.</div>
+<div class="meal-nutrition">
+<span>290 kcal</span><span>14 g protein</span><span>24 g carbs</span><span>14 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Palak Dal + 2 Roti</div>
+<div class="meal-detail">Amount: 1 cup dal with spinach, 2 roti</div>
+<div class="meal-recipe">Recipe: Cook dal until soft, then simmer with chopped spinach, garlic, tomato, and cumin tempering.</div>
+<div class="meal-nutrition">
+<span>450 kcal</span><span>19 g protein</span><span>56 g carbs</span><span>11 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1800 kcal</span><span>Protein: 81 g</span><span>Carbs: 200 g</span><span>Fat: 65 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Saturday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Masala Dosa + Sambar</div>
+<div class="meal-detail">Amount: 2 dosa, potato masala, 1 cup sambar</div>
+<div class="meal-recipe">Recipe: Fill crisp dosa with lightly spiced potato masala and serve with hot sambar and chutney.</div>
+<div class="meal-nutrition">
+<span>520 kcal</span><span>14 g protein</span><span>72 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Chicken Biryani + Onion Raita</div>
+<div class="meal-detail">Amount: 1.5 cups biryani, 1/2 cup raita</div>
+<div class="meal-recipe">Recipe: Layer cooked rice with marinated chicken, mint, fried onion, and spices, then steam on low heat. Serve with onion raita.</div>
+<div class="meal-nutrition">
+<span>690 kcal</span><span>35 g protein</span><span>74 g carbs</span><span>26 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Coconut Water + Mixed Nuts</div>
+<div class="meal-detail">Amount: 1 coconut water, 25 g mixed nuts</div>
+<div class="meal-recipe">Recipe: Keep the snack simple with fresh coconut water and a small portion of almonds, cashews, and walnuts.</div>
+<div class="meal-nutrition">
+<span>220 kcal</span><span>5 g protein</span><span>14 g carbs</span><span>16 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Mixed Veg Curry + 2 Phulka + Curd</div>
+<div class="meal-detail">Amount: 1 cup curry, 2 phulka, 100 g curd</div>
+<div class="meal-recipe">Recipe: Cook cauliflower, beans, peas, and carrot in onion-tomato gravy. Serve with soft phulka and plain curd.</div>
+<div class="meal-nutrition">
+<span>430 kcal</span><span>16 g protein</span><span>52 g carbs</span><span>14 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1860 kcal</span><span>Protein: 70 g</span><span>Carbs: 212 g</span><span>Fat: 74 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Sunday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Ragi Porridge + Banana + Almonds</div>
+<div class="meal-detail">Amount: 1 bowl ragi porridge, 1 banana, 10 almonds</div>
+<div class="meal-recipe">Recipe: Cook ragi flour with milk and water until smooth, sweeten lightly if needed, and top with sliced banana and crushed almonds.</div>
+<div class="meal-nutrition">
+<span>410 kcal</span><span>14 g protein</span><span>54 g carbs</span><span>14 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Chole + Jeera Rice + Salad</div>
+<div class="meal-detail">Amount: 1.25 cups chole, 1.25 cups rice, fresh salad</div>
+<div class="meal-recipe">Recipe: Simmer chickpeas in a thick onion-tomato masala with chole spices, then serve with jeera rice and onion-cucumber salad.</div>
+<div class="meal-nutrition">
+<span>610 kcal</span><span>20 g protein</span><span>92 g carbs</span><span>15 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Lassi + Roasted Makhana</div>
+<div class="meal-detail">Amount: 250 ml lassi, 25 g makhana</div>
+<div class="meal-recipe">Recipe: Blend curd with water for lassi and dry roast makhana with pepper and a tiny pinch of ghee.</div>
+<div class="meal-nutrition">
+<span>210 kcal</span><span>10 g protein</span><span>24 g carbs</span><span>7 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Tofu Stir-Fry + Millet Roti</div>
+<div class="meal-detail">Amount: 120 g tofu, 2 millet roti, bell pepper and broccoli</div>
+<div class="meal-recipe">Recipe: Stir-fry tofu with garlic, pepper, soy, and vegetables on high heat. Serve with freshly cooked millet roti.</div>
+<div class="meal-nutrition">
+<span>460 kcal</span><span>26 g protein</span><span>38 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1690 kcal</span><span>Protein: 70 g</span><span>Carbs: 208 g</span><span>Fat: 54 g</span>
+</div>
+</div>
+
+</div>
+
+</section>
+</section>
+</body>
+</html>
