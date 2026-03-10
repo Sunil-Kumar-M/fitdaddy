@@ -1021,6 +1021,8 @@ h1 em {
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
   .schedule-grid { grid-template-columns: repeat(4, 1fr); }
+  .tool-layout { grid-template-columns: 1fr; }
+  .tool-card { max-width: none; }
 }
 @media (max-width: 700px) {
   .hero, .principles, .page-nav, .week-nav, .week-intro, .days-container,
@@ -1033,6 +1035,8 @@ h1 em {
   h1 { font-size: clamp(36px, 12vw, 56px); }
   .hero-sub { font-size: 10px; letter-spacing: 1.5px; }
   .page-nav { top: 0; }
+  .tool-header { margin-bottom: 18px; }
+  .tool-copy { font-size: 13px; }
   .page-tab {
     min-width: 176px;
     padding: 14px 16px 12px;
@@ -1062,6 +1066,9 @@ h1 em {
   .swsch-grid { grid-template-columns: repeat(3, 1fr); }
   .ex-meta-grid { grid-template-columns: repeat(2, 1fr); }
   .morning-banner { flex-wrap: wrap; }
+  .tool-row,
+  .tool-result-grid { grid-template-columns: 1fr; }
+  .tool-sidecard { padding: 18px; }
   .diet-grid { grid-template-columns: 1fr; }
   .diet-card { padding: 16px; }
   .meal-block { padding: 14px; }
@@ -1085,6 +1092,7 @@ h1 em {
   .suppl-meta-row,
   .ex-meta-grid,
   .meal-nutrition { grid-template-columns: 1fr; }
+  .tool-header { align-items: flex-start; }
   .page-tab {
     min-width: 156px;
     font-size: 10px;
@@ -1093,7 +1101,11 @@ h1 em {
   .page-tab span { font-size: 8px; }
   .week-btn, .suppl-btn { padding-left: 14px; padding-right: 14px; }
   .tool-card { padding: 16px; }
+  .tool-sidecard { padding: 16px; }
   .tool-card input, .tool-card button { width: 100%; }
+  .tool-card select { width: 100%; }
+  .tool-quick-actions { display:grid; grid-template-columns:1fr; }
+  .tool-result-value { font-size: 32px; }
   .diet-card h3 { font-size: 22px; }
   .meal-name { font-size: 14px; }
   .meal-detail, .meal-recipe { font-size: 12px; }
@@ -1103,6 +1115,21 @@ h1 em {
 .tool-section{
 padding:40px 64px;
 border-top:1px solid var(--border);
+}
+
+.tool-header{
+display:flex;
+justify-content:space-between;
+align-items:flex-end;
+gap:24px;
+flex-wrap:wrap;
+margin-bottom:22px;
+}
+
+.tool-copy{
+max-width:640px;
+color:var(--muted);
+line-height:1.8;
 }
 
 .page-nav{
@@ -1162,10 +1189,18 @@ border-bottom-color:var(--accent);
 .page-panel{
 display:none;
 min-height:40vh;
+animation:panelFade 0.45s ease;
 }
 
 .page-panel.active{
 display:block;
+}
+
+.tool-layout{
+display:grid;
+grid-template-columns:minmax(0, 420px) minmax(0, 1fr);
+gap:24px;
+align-items:start;
 }
 
 .tool-card{
@@ -1177,6 +1212,45 @@ border:1px solid var(--border);
 display:flex;
 flex-direction:column;
 gap:10px;
+position:relative;
+overflow:hidden;
+box-shadow:0 20px 50px rgba(0,0,0,0.18);
+transition:transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.tool-card::before,
+.diet-card::before,
+.meal-block::before{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(135deg, rgba(201,168,76,0.08), transparent 45%);
+opacity:0;
+transition:opacity 0.3s ease;
+pointer-events:none;
+}
+
+.tool-card:hover,
+.diet-card:hover,
+.meal-block:hover{
+transform:translateY(-4px);
+border-color:var(--border-hi);
+box-shadow:0 24px 54px rgba(0,0,0,0.22);
+}
+
+.tool-card:hover::before,
+.diet-card:hover::before,
+.meal-block:hover::before{
+opacity:1;
+}
+
+.tool-card label{
+font-family:'Space Mono', monospace;
+font-size:10px;
+letter-spacing:1.5px;
+text-transform:uppercase;
+color:var(--accent);
+margin-top:4px;
 }
 
 .tool-card input{
@@ -1184,13 +1258,212 @@ padding:10px;
 background:var(--bg);
 border:1px solid var(--border);
 color:var(--white);
+border-radius:0;
+font-size:14px;
+min-height:44px;
+transition:border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.tool-card button{
+.tool-card input:focus,
+.tool-card select:focus{
+outline:none;
+border-color:var(--accent);
+box-shadow:0 0 0 3px var(--accent-glow);
+transform:translateY(-1px);
+}
+
+.tool-card select{
+padding:10px;
+background:var(--bg);
+border:1px solid var(--border);
+color:var(--white);
+font-size:14px;
+min-height:44px;
+}
+
+.tool-card button,
+.tool-quick-btn{
 background:var(--accent);
 border:none;
-padding:10px;
+padding:12px 14px;
 cursor:pointer;
+color:#1a1406;
+font-family:'Space Mono', monospace;
+font-size:11px;
+font-weight:700;
+letter-spacing:1px;
+text-transform:uppercase;
+transition:transform 0.2s ease, filter 0.2s ease;
+}
+
+.tool-card button:hover,
+.tool-quick-btn:hover{
+transform:translateY(-1px);
+filter:brightness(1.06);
+}
+
+.tool-card button:active,
+.tool-quick-btn:active{
+transform:translateY(0);
+}
+
+.tool-row{
+display:grid;
+grid-template-columns:repeat(2, minmax(0, 1fr));
+gap:12px;
+}
+
+.tool-quick-actions{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.tool-quick-btn{
+background:transparent;
+border:1px solid var(--border-hi);
+color:var(--text);
+padding:10px 12px;
+}
+
+.tool-result{
+margin-top:10px;
+padding:16px;
+border:1px solid var(--border);
+background:var(--surface);
+display:none;
+gap:14px;
+}
+
+.tool-result.show{
+display:grid;
+}
+
+.tool-result-head{
+display:flex;
+justify-content:space-between;
+align-items:flex-start;
+gap:12px;
+}
+
+.tool-result-label{
+font-family:'Space Mono', monospace;
+font-size:10px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--accent);
+}
+
+.tool-result-value{
+font-family:'DM Serif Display', serif;
+font-size:38px;
+line-height:0.95;
+letter-spacing:-1px;
+color:var(--white);
+}
+
+.tool-result-note{
+font-size:13px;
+color:var(--text);
+line-height:1.7;
+}
+
+.tool-result-grid{
+display:grid;
+grid-template-columns:repeat(2, minmax(0, 1fr));
+gap:10px;
+}
+
+.tool-result-stat{
+padding:12px;
+border:1px solid var(--border);
+background:var(--bg);
+}
+
+.tool-result-stat span{
+display:block;
+}
+
+.tool-result-stat .k{
+font-family:'Space Mono', monospace;
+font-size:9px;
+letter-spacing:1.5px;
+text-transform:uppercase;
+color:var(--muted);
+margin-bottom:6px;
+}
+
+.tool-result-stat .v{
+font-size:14px;
+font-weight:600;
+color:var(--white);
+line-height:1.5;
+}
+
+.tool-sidecard{
+background:linear-gradient(180deg, rgba(23,20,10,0.95), rgba(17,16,8,0.95));
+border:1px solid var(--border);
+padding:22px;
+display:flex;
+flex-direction:column;
+gap:16px;
+position:relative;
+overflow:hidden;
+min-height:100%;
+}
+
+.tool-sidecard::before{
+content:'';
+position:absolute;
+top:-30%;
+right:-10%;
+width:180px;
+height:180px;
+border-radius:50%;
+background:radial-gradient(circle, rgba(201,168,76,0.18), transparent 70%);
+pointer-events:none;
+}
+
+.tool-sidecard h3{
+font-family:'DM Serif Display', serif;
+font-size:28px;
+font-weight:400;
+letter-spacing:-0.5px;
+color:var(--white);
+position:relative;
+}
+
+.tool-sidecard p{
+color:var(--muted);
+line-height:1.8;
+position:relative;
+}
+
+.tool-sidecard ul{
+list-style:none;
+display:flex;
+flex-direction:column;
+gap:12px;
+position:relative;
+}
+
+.tool-sidecard li{
+padding-left:18px;
+position:relative;
+color:var(--text);
+line-height:1.7;
+}
+
+.tool-sidecard li::before{
+content:'';
+position:absolute;
+left:0;
+top:9px;
+width:7px;
+height:7px;
+border-radius:50%;
+background:var(--accent);
+box-shadow:0 0 16px var(--accent-glow);
 }
 
 .diet-grid{
@@ -1249,6 +1522,10 @@ line-height:1.8;
 display:flex;
 flex-direction:column;
 gap:16px;
+position:relative;
+overflow:hidden;
+box-shadow:0 20px 50px rgba(0,0,0,0.16);
+transition:transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
 }
 
 .diet-day-meta{
@@ -1272,6 +1549,8 @@ color:var(--accent);
 padding:16px;
 background:var(--surface);
 border:1px solid var(--border);
+position:relative;
+overflow:hidden;
 }
 
 .meal-block h4{
@@ -1324,6 +1603,93 @@ color:var(--text);
 text-align:center;
 line-height:1.4;
 overflow-wrap:anywhere;
+}
+
+[data-reveal]{
+opacity:0;
+transform:translateY(22px);
+transition:opacity 0.6s ease, transform 0.6s ease;
+}
+
+[data-reveal].is-visible{
+opacity:1;
+transform:translateY(0);
+}
+
+@keyframes panelFade{
+from{
+opacity:0;
+transform:translateY(8px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation:none !important;
+    transition:none !important;
+    scroll-behavior:auto !important;
+  }
+  [data-reveal]{
+    opacity:1;
+    transform:none;
+  }
+}
+
+@media (max-width: 900px) {
+  .tool-layout { grid-template-columns: 1fr; }
+  .tool-card { max-width: none; }
+}
+
+@media (max-width: 700px) {
+  .tool-section, .diet-section, .page-nav { padding-left: 20px; padding-right: 20px; }
+  .tool-header { margin-bottom: 18px; }
+  .tool-copy { font-size: 13px; }
+  .page-tab {
+    min-width: 176px;
+    padding: 14px 16px 12px;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .page-tab span {
+    white-space: nowrap;
+    line-height: 1.2;
+  }
+  .tool-row,
+  .tool-result-grid { grid-template-columns: 1fr; }
+  .tool-sidecard { padding: 18px; }
+  .diet-grid { grid-template-columns: 1fr; }
+  .diet-card { padding: 16px; }
+  .meal-block { padding: 14px; }
+  .diet-day-meta { gap: 10px; }
+  .diet-day-meta span { font-size: 9px; }
+  .meal-nutrition { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 480px) {
+  .tool-section, .diet-section, .page-nav { padding-left: 14px; padding-right: 14px; }
+  .page-tab {
+    min-width: 156px;
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+  .page-tab span { font-size: 8px; }
+  .tool-header { align-items: flex-start; }
+  .tool-card { padding: 16px; }
+  .tool-sidecard { padding: 16px; }
+  .tool-card input,
+  .tool-card button,
+  .tool-card select { width: 100%; }
+  .tool-quick-actions { display:grid; grid-template-columns:1fr; }
+  .tool-result-value { font-size: 32px; }
+  .diet-card h3 { font-size: 22px; }
+  .meal-name { font-size: 14px; }
+  .meal-detail, .meal-recipe { font-size: 12px; }
+  .diet-day-meta { flex-direction: column; align-items: flex-start; }
+  .meal-nutrition { grid-template-columns: 1fr; }
 }
 
 </style>
@@ -2918,15 +3284,34 @@ overflow-wrap:anywhere;
     document.getElementById('page-' + id).classList.add('active');
     btn.classList.add('active');
     if (id === 'workout') setTimeout(animateCards, 80);
+    setTimeout(() => revealVisibleItems(document.getElementById('page-' + id)), 40);
+  }
+
+  function fillProteinExample(weight, unit, goal, activity, meals) {
+    document.getElementById('bodyweight').value = weight;
+    document.getElementById('weightUnit').value = unit;
+    document.getElementById('goal').value = goal;
+    document.getElementById('proteinActivity').value = activity;
+    document.getElementById('mealsPerDay').value = meals;
+    calculateProtein();
+  }
+
+  function revealVisibleItems(scope = document) {
+    scope.querySelectorAll('[data-reveal]').forEach((item, index) => {
+      setTimeout(() => item.classList.add('is-visible'), index * 60);
+    });
   }
 
   /* ─── Expandable PPL Exercise Cells ─── */
   document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.tool-card, .tool-sidecard, .diet-card, .meal-block, .schedule-section, .coaching-note, .abs-section, .forearms-section').forEach(el => {
+      el.setAttribute('data-reveal', '');
+    });
+
     // Upgrade all ex-cells with expandable detail if they have a glass-tip
     document.querySelectorAll('.ex-cell').forEach(cell => {
       const tip = cell.querySelector('.ex-glass-tip');
       const top = cell.querySelector('.ex-top');
-      const nameEl = cell.querySelector('.ex-name');
       const setsEl = cell.querySelector('.ex-sets');
       if (!tip || !top) return;
 
@@ -2961,6 +3346,24 @@ overflow-wrap:anywhere;
       });
     });
 
+    document.querySelectorAll('#height, #weight, #age, #bodyweight').forEach(input => {
+      input.addEventListener('keydown', event => {
+        if (event.key !== 'Enter') return;
+        if (input.id === 'bodyweight') calculateProtein();
+        else calculateBMI();
+      });
+    });
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('[data-reveal]').forEach(item => revealObserver.observe(item));
+    revealVisibleItems(document.getElementById('page-workout'));
     setTimeout(animateCards, 100);
   });
 </script>
@@ -2969,64 +3372,327 @@ overflow-wrap:anywhere;
 <section id="page-bmi" class="page-panel">
 <section class="tool-section">
 
-<div class="section-eyebrow">Fitness Tool</div>
-<div class="section-title">BMI Calculator</div>
+<div class="tool-header">
+  <div>
+    <div class="section-eyebrow">Fitness Tool</div>
+    <div class="section-title">BMI Calculator</div>
+  </div>
+  <p class="tool-copy">Get more than a single BMI number. This version shows your category, healthy weight range for your height, estimated BMR, and approximate maintenance calories.</p>
+</div>
 
-<div class="tool-card">
+<div class="tool-layout">
+  <div class="tool-card" data-reveal>
+    <label for="height">Height (cm)</label>
+    <input type="number" id="height" placeholder="e.g. 175" min="100" max="250">
 
-<label>Height (cm)</label>
-<input type="number" id="height">
+    <label for="weight">Weight (kg)</label>
+    <input type="number" id="weight" placeholder="e.g. 72" min="25" max="300" step="0.1">
 
-<label>Weight (kg)</label>
-<input type="number" id="weight">
+    <div class="tool-row">
+      <div>
+        <label for="age">Age</label>
+        <input type="number" id="age" placeholder="e.g. 28" min="15" max="90">
+      </div>
+      <div>
+        <label for="sex">Sex</label>
+        <select id="sex">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+    </div>
 
-<button onclick="calculateBMI()">Calculate BMI</button>
+    <div class="tool-row">
+      <div>
+        <label for="bmiActivity">Activity Level</label>
+        <select id="bmiActivity">
+          <option value="1.2">Sedentary</option>
+          <option value="1.375">Lightly Active</option>
+          <option value="1.55" selected>Moderately Active</option>
+          <option value="1.725">Very Active</option>
+          <option value="1.9">Athlete Level</option>
+        </select>
+      </div>
+    </div>
 
-<p id="bmiResult"></p>
+    <button onclick="calculateBMI()">Calculate Body Metrics</button>
 
+    <div id="bmiResult" class="tool-result" aria-live="polite"></div>
+  </div>
+
+  <aside class="tool-sidecard" data-reveal>
+    <h3>What It Tells You</h3>
+    <p>BMI is a quick screening metric, not a perfect body-composition tool. It becomes more useful when paired with age, activity, and calorie guidance.</p>
+    <ul>
+      <li>BMI category helps flag underweight, normal, overweight, or obesity range.</li>
+      <li>Healthy weight range is based on BMI 18.5 to 24.9 for your height.</li>
+      <li>BMR estimates calories your body burns at rest.</li>
+      <li>Maintenance calories estimate daily intake to maintain current weight.</li>
+    </ul>
+  </aside>
 </div>
 </section>
 </section>
 <script>
 
 function calculateBMI(){
+const heightCm = parseFloat(document.getElementById("height").value);
+const weightKg = parseFloat(document.getElementById("weight").value);
+const age = parseFloat(document.getElementById("age").value);
+const sex = document.getElementById("sex").value;
+const activity = parseFloat(document.getElementById("bmiActivity").value);
+const result = document.getElementById("bmiResult");
 
-let height = document.getElementById("height").value / 100;
-let weight = document.getElementById("weight").value;
+if (!heightCm || !weightKg || !age || heightCm <= 0 || weightKg <= 0 || age <= 0) {
+  result.className = "tool-result show";
+  result.innerHTML = `
+    <div class="tool-result-note">
+      Please enter valid height, weight, and age values to calculate your BMI and calorie estimates.
+    </div>`;
+  return;
+}
 
-let bmi = weight / (height * height);
+const heightM = heightCm / 100;
+const bmi = weightKg / (heightM * heightM);
+const healthyMin = 18.5 * heightM * heightM;
+const healthyMax = 24.9 * heightM * heightM;
+const category = getBmiCategory(bmi);
+const bmr = sex === "male"
+  ? (10 * weightKg) + (6.25 * heightCm) - (5 * age) + 5
+  : (10 * weightKg) + (6.25 * heightCm) - (5 * age) - 161;
+const maintenance = bmr * activity;
 
-document.getElementById("bmiResult").innerText =
-"Your BMI is " + bmi.toFixed(2);
+result.className = "tool-result show";
+result.innerHTML = `
+  <div class="tool-result-head">
+    <div>
+      <div class="tool-result-label">Body Mass Index</div>
+      <div class="tool-result-value">${bmi.toFixed(1)}</div>
+    </div>
+    <div class="tool-result-stat">
+      <span class="k">Category</span>
+      <span class="v">${category}</span>
+    </div>
+  </div>
+  <div class="tool-result-note">
+    Based on your height and weight, you are in the <strong>${category}</strong> BMI range. Use this as a screening tool along with waist size, strength, and body-fat trends.
+  </div>
+  <div class="tool-result-grid">
+    <div class="tool-result-stat">
+      <span class="k">Healthy Weight Range</span>
+      <span class="v">${healthyMin.toFixed(1)} - ${healthyMax.toFixed(1)} kg</span>
+    </div>
+    <div class="tool-result-stat">
+      <span class="k">BMR</span>
+      <span class="v">${Math.round(bmr)} kcal/day</span>
+    </div>
+    <div class="tool-result-stat">
+      <span class="k">Maintenance Calories</span>
+      <span class="v">${Math.round(maintenance)} kcal/day</span>
+    </div>
+    <div class="tool-result-stat">
+      <span class="k">Suggested Direction</span>
+      <span class="v">${getBmiSuggestion(bmi)}</span>
+    </div>
+  </div>`;
 
 }
 
 function calculateProtein(){
+const weightInput = parseFloat(document.getElementById("bodyweight").value);
+const unit = document.getElementById("weightUnit").value;
+const goal = document.getElementById("goal").value;
+const activity = document.getElementById("proteinActivity").value;
+const meals = parseFloat(document.getElementById("mealsPerDay").value) || 4;
+const result = document.getElementById("proteinResult");
 
-let weight = document.getElementById("bodyweight").value;
+if (!weightInput || weightInput <= 0) {
+  result.className = "tool-result show";
+  result.innerHTML = `
+    <div class="tool-result-note">
+      Please enter a valid body weight to calculate your daily protein target.
+    </div>`;
+  return;
+}
 
-let protein = weight * 2;
+const weightKg = unit === "lb" ? weightInput * 0.453592 : weightInput;
+const goalBase = {
+  maintain: 1.6,
+  fatloss: 2.2,
+  muscle: 1.8,
+  recomposition: 2.0,
+  endurance: 1.5
+};
+const activityAdj = {
+  low: -0.1,
+  moderate: 0,
+  high: 0.2,
+  athlete: 0.3
+};
+const gramsPerKg = Math.max(1.4, (goalBase[goal] || 1.6) + (activityAdj[activity] || 0));
+const dailyProtein = weightKg * gramsPerKg;
+const lowerRange = Math.max(weightKg * (gramsPerKg - 0.2), weightKg * 1.4);
+const upperRange = weightKg * (gramsPerKg + 0.2);
+const perMeal = dailyProtein / meals;
 
-document.getElementById("proteinResult").innerText =
-"You need about " + protein + " grams of protein daily.";
+result.className = "tool-result show";
+result.innerHTML = `
+  <div class="tool-result-head">
+    <div>
+      <div class="tool-result-label">Daily Protein Target</div>
+      <div class="tool-result-value">${Math.round(dailyProtein)}g</div>
+    </div>
+    <div class="tool-result-stat">
+      <span class="k">Per Kg Target</span>
+      <span class="v">${gramsPerKg.toFixed(1)} g/kg</span>
+    </div>
+  </div>
+  <div class="tool-result-note">
+    For a <strong>${formatGoal(goal)}</strong> goal with <strong>${formatActivity(activity)}</strong> activity, aim for a protein intake that stays within a useful performance range rather than chasing a single exact number.
+  </div>
+  <div class="tool-result-grid">
+    <div class="tool-result-stat">
+      <span class="k">Suggested Range</span>
+      <span class="v">${Math.round(lowerRange)} - ${Math.round(upperRange)} g/day</span>
+    </div>
+    <div class="tool-result-stat">
+      <span class="k">Per Meal</span>
+      <span class="v">${Math.round(perMeal)} g across ${meals} meals</span>
+    </div>
+    <div class="tool-result-stat">
+      <span class="k">Weight Used</span>
+      <span class="v">${weightKg.toFixed(1)} kg</span>
+    </div>
+    <div class="tool-result-stat">
+      <span class="k">Tip</span>
+      <span class="v">${getProteinTip(goal)}</span>
+    </div>
+  </div>`;
 
+}
+
+function getBmiCategory(bmi) {
+  if (bmi < 18.5) return "Underweight";
+  if (bmi < 25) return "Healthy";
+  if (bmi < 30) return "Overweight";
+  return "Obesity Range";
+}
+
+function getBmiSuggestion(bmi) {
+  if (bmi < 18.5) return "Focus on steady calorie surplus";
+  if (bmi < 25) return "Maintain or lean bulk/cut as needed";
+  if (bmi < 30) return "Mild calorie deficit + strength work";
+  return "Structured fat-loss phase is recommended";
+}
+
+function formatGoal(goal) {
+  return {
+    maintain: "maintenance",
+    fatloss: "fat loss",
+    muscle: "muscle gain",
+    recomposition: "body recomposition",
+    endurance: "endurance support"
+  }[goal] || "maintenance";
+}
+
+function formatActivity(activity) {
+  return {
+    low: "low",
+    moderate: "moderate",
+    high: "high",
+    athlete: "very high"
+  }[activity] || "moderate";
+}
+
+function getProteinTip(goal) {
+  if (goal === "fatloss") return "Keep protein high to protect lean muscle while dieting.";
+  if (goal === "muscle") return "Spread protein across the day and pair it with progressive overload.";
+  if (goal === "recomposition") return "Prioritize consistency and hit your protein target even on rest days.";
+  if (goal === "endurance") return "Include protein after longer training sessions to help recovery.";
+  return "Aim for evenly spaced protein feedings to improve muscle protein synthesis.";
 }
 
 </script>
 <section id="page-protein" class="page-panel">
 <section class="tool-section">
 
-<div class="section-title">Daily Protein Calculator</div>
+<div class="tool-header">
+  <div>
+    <div class="section-eyebrow">Nutrition Tool</div>
+    <div class="section-title">Daily Protein Calculator</div>
+  </div>
+  <p class="tool-copy">Calculate protein intake based on your body weight, goal, activity level, and how many meals you want to spread it across.</p>
+</div>
 
-<div class="tool-card">
+<div class="tool-layout">
+  <div class="tool-card" data-reveal>
+    <div class="tool-row">
+      <div>
+        <label for="bodyweight">Body Weight</label>
+        <input type="number" id="bodyweight" placeholder="e.g. 72" min="20" max="400" step="0.1">
+      </div>
+      <div>
+        <label for="weightUnit">Unit</label>
+        <select id="weightUnit">
+          <option value="kg">Kilograms</option>
+          <option value="lb">Pounds</option>
+        </select>
+      </div>
+    </div>
 
-<label>Body Weight (kg)</label>
-<input type="number" id="bodyweight">
+    <div class="tool-row">
+      <div>
+        <label for="goal">Goal</label>
+        <select id="goal">
+          <option value="maintain">Maintain</option>
+          <option value="fatloss">Fat Loss</option>
+          <option value="muscle" selected>Muscle Gain</option>
+          <option value="recomposition">Recomposition</option>
+          <option value="endurance">Endurance</option>
+        </select>
+      </div>
+      <div>
+        <label for="proteinActivity">Activity</label>
+        <select id="proteinActivity">
+          <option value="low">Low</option>
+          <option value="moderate" selected>Moderate</option>
+          <option value="high">High</option>
+          <option value="athlete">Athlete</option>
+        </select>
+      </div>
+    </div>
 
-<button onclick="calculateProtein()">Calculate Protein</button>
+    <div class="tool-row">
+      <div>
+        <label for="mealsPerDay">Meals Per Day</label>
+        <select id="mealsPerDay">
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </div>
+    </div>
 
-<p id="proteinResult"></p>
+    <div class="tool-quick-actions">
+      <button onclick="calculateProtein()">Calculate Protein</button>
+      <button type="button" class="tool-quick-btn" onclick="fillProteinExample(65, 'kg', 'fatloss', 'moderate', 4)">Fat Loss Example</button>
+      <button type="button" class="tool-quick-btn" onclick="fillProteinExample(82, 'kg', 'muscle', 'high', 5)">Muscle Gain Example</button>
+    </div>
 
+    <div id="proteinResult" class="tool-result" aria-live="polite"></div>
+  </div>
+
+  <aside class="tool-sidecard" data-reveal>
+    <h3>How To Use It</h3>
+    <p>Protein needs change with training and goals. This calculator gives a more practical target than a flat multiplier.</p>
+    <ul>
+      <li>Higher targets help during fat loss and body recomposition.</li>
+      <li>Evenly splitting protein across meals makes the target easier to hit.</li>
+      <li>Use the range as guidance, not as a strict pass-or-fail number.</li>
+      <li>Consistency matters more than perfect timing.</li>
+    </ul>
+  </aside>
 </div>
 </section>
 </section>
