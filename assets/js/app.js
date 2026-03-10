@@ -32,14 +32,20 @@ function slugifyWorkoutText(value) {
 
 function getWorkoutItemId(element) {
   if (element.classList.contains("ex-cell")) {
-    const panelId = element.closest(".week-panel")?.id || "week";
-    const dayLabel = element.closest(".day-block")?.querySelector(".day-num-col")?.textContent.trim() || "day";
-    const exerciseName = element.querySelector(".ex-name")?.textContent.trim() || "exercise";
+    const weekPanel = element.closest(".week-panel");
+    const dayBlock = element.closest(".day-block");
+    const dayLabelCell = dayBlock ? dayBlock.querySelector(".day-num-col") : null;
+    const exerciseNameCell = element.querySelector(".ex-name");
+    const panelId = weekPanel ? weekPanel.id : "week";
+    const dayLabel = dayLabelCell ? dayLabelCell.textContent.trim() : "day";
+    const exerciseName = exerciseNameCell ? exerciseNameCell.textContent.trim() : "exercise";
     return `${panelId}-${slugifyWorkoutText(dayLabel)}-${slugifyWorkoutText(exerciseName)}`;
   }
 
-  const panelId = element.closest(".suppl-panel")?.id || "supplementary";
-  const exerciseName = element.querySelector(".suppl-ex-name")?.textContent.trim() || "exercise";
+  const supplPanel = element.closest(".suppl-panel");
+  const exerciseNameCell = element.querySelector(".suppl-ex-name");
+  const panelId = supplPanel ? supplPanel.id : "supplementary";
+  const exerciseName = exerciseNameCell ? exerciseNameCell.textContent.trim() : "exercise";
   return `${panelId}-${slugifyWorkoutText(exerciseName)}`;
 }
 
@@ -96,7 +102,10 @@ function attachWorkoutCompletionButtons() {
       } else {
         const hint = item.querySelector(".suppl-expand-hint");
         if (hint) hint.after(actionRow);
-        else item.querySelector(".suppl-ex-body")?.appendChild(actionRow);
+        else {
+          const body = item.querySelector(".suppl-ex-body");
+          if (body) body.appendChild(actionRow);
+        }
       }
     }
 
@@ -111,6 +120,7 @@ function attachWorkoutCompletionButtons() {
     document.getElementById('week-' + n).classList.add('active');
     btn.classList.add('active');
     setTimeout(animateCards, 50);
+    setTimeout(attachWorkoutCompletionButtons, 80);
   }
 
   function animateCards() {
@@ -128,6 +138,7 @@ function attachWorkoutCompletionButtons() {
     document.getElementById('suppl-' + id).classList.add('active');
     btn.classList.add('active');
     if (id === 'ppl') setTimeout(animateCards, 80);
+    setTimeout(attachWorkoutCompletionButtons, 80);
   }
 
   /* ─── Expandable Supplementary Exercise Rows ─── */
@@ -144,6 +155,7 @@ function attachWorkoutCompletionButtons() {
     document.getElementById('page-' + id).classList.add('active');
     btn.classList.add('active');
     if (id === 'workout') setTimeout(animateCards, 80);
+    setTimeout(attachWorkoutCompletionButtons, 80);
     setTimeout(() => revealVisibleItems(document.getElementById('page-' + id)), 40);
   }
 
@@ -214,19 +226,28 @@ function attachWorkoutCompletionButtons() {
       });
     });
 
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        revealObserver.unobserve(entry.target);
-      });
-    }, { threshold: 0.12 });
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.12 });
 
-    document.querySelectorAll('[data-reveal]').forEach(item => revealObserver.observe(item));
+      document.querySelectorAll('[data-reveal]').forEach(item => revealObserver.observe(item));
+    } else {
+      revealVisibleItems();
+    }
+
     attachWorkoutCompletionButtons();
     revealVisibleItems(document.getElementById('page-workout'));
     setTimeout(animateCards, 100);
   });
+
+window.addEventListener('load', () => {
+  attachWorkoutCompletionButtons();
+});
 
 function calculateBMI(){
 const heightCm = parseFloat(document.getElementById("height").value);
