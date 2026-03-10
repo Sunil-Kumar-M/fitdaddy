@@ -1023,18 +1023,38 @@ h1 em {
   .schedule-grid { grid-template-columns: repeat(4, 1fr); }
 }
 @media (max-width: 700px) {
-  .hero, .principles, .week-nav, .week-intro, .days-container,
+  .hero, .principles, .page-nav, .week-nav, .week-intro, .days-container,
   .coaching-note, .nutrition-row,
   .schedule-section, .abs-section, .forearms-section,
+  .tool-section, .diet-section,
   .suppl-nav { padding-left: 20px; padding-right: 20px; }
+  .hero { padding-top: 56px; padding-bottom: 40px; }
+  .hero-bg-text { font-size: 160px; right: -10px; top: -20px; }
+  h1 { font-size: clamp(36px, 12vw, 56px); }
+  .hero-sub { font-size: 10px; letter-spacing: 1.5px; }
+  .page-nav { top: 0; }
+  .page-tab {
+    min-width: 176px;
+    padding: 14px 16px 12px;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .page-tab span {
+    white-space: nowrap;
+    line-height: 1.2;
+  }
   .nutrition-row { grid-template-columns: repeat(2, 1fr); }
   .nut-cell:nth-child(2) { border-right: none; }
   .nut-cell:nth-child(3),
   .nut-cell:nth-child(4) { border-top: 1px solid var(--border); }
   .hero-stats { flex-wrap: wrap; }
+  .hero-stats, .week-nav, .suppl-nav, .page-nav { scroll-snap-type: x proximity; }
+  .page-tab, .week-btn, .suppl-btn { scroll-snap-align: start; }
   .exercises-grid { grid-template-columns: 1fr; }
   .week-intro { flex-direction: column; }
   .wi-right { width: 100%; }
+  .week-btn { padding: 16px 18px 14px; }
+  .suppl-btn { padding: 14px 16px 12px; }
   .schedule-grid { grid-template-columns: repeat(2, 1fr); }
   .suppl-meta-row { grid-template-columns: repeat(2, 1fr); }
   .suppl-intro { flex-direction: column; }
@@ -1042,7 +1062,270 @@ h1 em {
   .swsch-grid { grid-template-columns: repeat(3, 1fr); }
   .ex-meta-grid { grid-template-columns: repeat(2, 1fr); }
   .morning-banner { flex-wrap: wrap; }
+  .diet-grid { grid-template-columns: 1fr; }
+  .diet-card { padding: 16px; }
+  .meal-block { padding: 14px; }
+  .diet-day-meta { gap: 10px; }
+  .diet-day-meta span { font-size: 9px; }
+  .meal-nutrition { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+@media (max-width: 480px) {
+  .hero, .principles, .week-intro, .days-container,
+  .coaching-note, .nutrition-row,
+  .schedule-section, .abs-section, .forearms-section,
+  .tool-section, .diet-section,
+  .suppl-nav { padding-left: 14px; padding-right: 14px; }
+  .page-nav { padding-left: 14px; padding-right: 14px; }
+  .hero-bg-text { display: none; }
+  .hero-stats { width: 100%; }
+  .h-stat { flex: 1 1 50%; padding: 14px 16px; }
+  .schedule-grid,
+  .swsch-grid,
+  .suppl-meta-row,
+  .ex-meta-grid,
+  .meal-nutrition { grid-template-columns: 1fr; }
+  .page-tab {
+    min-width: 156px;
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+  .page-tab span { font-size: 8px; }
+  .week-btn, .suppl-btn { padding-left: 14px; padding-right: 14px; }
+  .tool-card { padding: 16px; }
+  .tool-card input, .tool-card button { width: 100%; }
+  .diet-card h3 { font-size: 22px; }
+  .meal-name { font-size: 14px; }
+  .meal-detail, .meal-recipe { font-size: 12px; }
+  .diet-day-meta { flex-direction: column; align-items: flex-start; }
+}
+
+.tool-section{
+padding:40px 64px;
+border-top:1px solid var(--border);
+}
+
+.page-nav{
+position:sticky;
+top:0;
+z-index:110;
+display:flex;
+gap:0;
+padding:0 64px;
+overflow-x:auto;
+background:rgba(10,10,10,0.97);
+backdrop-filter:blur(16px);
+border-top:1px solid var(--border);
+border-bottom:1px solid var(--border);
+scrollbar-width:none;
+}
+
+.page-nav::-webkit-scrollbar{ display:none; }
+
+.page-tab{
+background:none;
+border:none;
+border-bottom:2px solid transparent;
+color:var(--muted);
+font-family:'Space Mono', monospace;
+font-size:11px;
+font-weight:700;
+letter-spacing:2px;
+text-transform:uppercase;
+padding:18px 26px 16px;
+cursor:pointer;
+white-space:nowrap;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:4px;
+transition:color 0.2s, border-color 0.2s;
+flex:0 0 auto;
+text-align:center;
+}
+
+.page-tab span{
+font-size:8px;
+font-weight:400;
+letter-spacing:1px;
+opacity:0.55;
+font-family:'DM Sans', sans-serif;
+text-transform:uppercase;
+}
+
+.page-tab:hover{ color:var(--white); }
+.page-tab.active{
+color:var(--accent);
+border-bottom-color:var(--accent);
+}
+
+.page-panel{
+display:none;
+min-height:40vh;
+}
+
+.page-panel.active{
+display:block;
+}
+
+.tool-card{
+background:var(--card);
+padding:20px;
+max-width:400px;
+width:100%;
+border:1px solid var(--border);
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.tool-card input{
+padding:10px;
+background:var(--bg);
+border:1px solid var(--border);
+color:var(--white);
+}
+
+.tool-card button{
+background:var(--accent);
+border:none;
+padding:10px;
+cursor:pointer;
+}
+
+.diet-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.diet-section{
+padding:40px 64px 56px;
+border-top:1px solid var(--border);
+}
+
+.diet-card{
+background:var(--card);
+padding:20px;
+border:1px solid var(--border);
+}
+
+.diet-card h3{
+font-family:'DM Serif Display', serif;
+font-size:24px;
+font-weight:400;
+color:var(--white);
+margin-bottom:12px;
+line-height:1.1;
+}
+
+.diet-card ul{
+list-style:none;
+display:flex;
+flex-direction:column;
+gap:10px;
+padding:0;
+}
+
+.diet-card li{
+color:var(--text);
+border-bottom:1px solid var(--border);
+padding-bottom:10px;
+}
+
+.diet-card li:last-child{
+border-bottom:none;
+padding-bottom:0;
+}
+
+.diet-intro{
+max-width:760px;
+margin:14px 0 28px;
+color:var(--muted);
+line-height:1.8;
+}
+
+.diet-card{
+display:flex;
+flex-direction:column;
+gap:16px;
+}
+
+.diet-day-meta{
+display:flex;
+justify-content:space-between;
+gap:16px;
+flex-wrap:wrap;
+padding-top:12px;
+border-top:1px solid var(--border);
+}
+
+.diet-day-meta span{
+font-family:'Space Mono', monospace;
+font-size:10px;
+letter-spacing:1px;
+text-transform:uppercase;
+color:var(--accent);
+}
+
+.meal-block{
+padding:16px;
+background:var(--surface);
+border:1px solid var(--border);
+}
+
+.meal-block h4{
+font-family:'Space Mono', monospace;
+font-size:11px;
+letter-spacing:2px;
+text-transform:uppercase;
+color:var(--accent);
+margin-bottom:10px;
+}
+
+.meal-name{
+font-size:15px;
+font-weight:600;
+color:var(--white);
+margin-bottom:8px;
+line-height:1.5;
+}
+
+.meal-detail{
+font-size:13px;
+color:var(--text);
+margin-bottom:6px;
+line-height:1.6;
+}
+
+.meal-recipe{
+font-size:12px;
+line-height:1.7;
+color:var(--muted);
+margin-bottom:10px;
+}
+
+.meal-nutrition{
+display:grid;
+grid-template-columns:repeat(4, minmax(0, 1fr));
+gap:8px;
+}
+
+.meal-nutrition span{
+display:block;
+padding:8px 10px;
+border:1px solid var(--border);
+background:var(--bg);
+font-family:'Space Mono', monospace;
+font-size:10px;
+letter-spacing:1px;
+text-transform:uppercase;
+color:var(--text);
+text-align:center;
+line-height:1.4;
+overflow-wrap:anywhere;
+}
+
 </style>
 </head>
 <body>
@@ -1081,6 +1364,15 @@ h1 em {
     <div class="principle-chip">🧠 Mind-Muscle First — Weight Second</div>
   </div>
 </div>
+
+<nav class="page-nav">
+  <button class="page-tab active" onclick="showPageTab('workout', this)">Workout<span>PPL + Abs + Forearms</span></button>
+  <button class="page-tab" onclick="showPageTab('bmi', this)">BMI Calculator<span>Height and Weight</span></button>
+  <button class="page-tab" onclick="showPageTab('protein', this)">Protein Calculator<span>Daily Intake</span></button>
+  <button class="page-tab" onclick="showPageTab('meal', this)">Meal Planner<span>Weekly Indian Diet</span></button>
+</nav>
+
+<section id="page-workout" class="page-panel active">
 
 <!-- WEEKLY SCHEDULE -->
 <section class="schedule-section">
@@ -2620,6 +2912,14 @@ h1 em {
     if (!wasOpen) row.classList.add('open');
   }
 
+  function showPageTab(id, btn) {
+    document.querySelectorAll('.page-panel').forEach(panel => panel.classList.remove('active'));
+    document.querySelectorAll('.page-tab').forEach(tab => tab.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    btn.classList.add('active');
+    if (id === 'workout') setTimeout(animateCards, 80);
+  }
+
   /* ─── Expandable PPL Exercise Cells ─── */
   document.addEventListener('DOMContentLoaded', () => {
     // Upgrade all ex-cells with expandable detail if they have a glass-tip
@@ -2664,5 +2964,385 @@ h1 em {
     setTimeout(animateCards, 100);
   });
 </script>
+ </section>
+
+<section id="page-bmi" class="page-panel">
+<section class="tool-section">
+
+<div class="section-eyebrow">Fitness Tool</div>
+<div class="section-title">BMI Calculator</div>
+
+<div class="tool-card">
+
+<label>Height (cm)</label>
+<input type="number" id="height">
+
+<label>Weight (kg)</label>
+<input type="number" id="weight">
+
+<button onclick="calculateBMI()">Calculate BMI</button>
+
+<p id="bmiResult"></p>
+
+</div>
+</section>
+</section>
+<script>
+
+function calculateBMI(){
+
+let height = document.getElementById("height").value / 100;
+let weight = document.getElementById("weight").value;
+
+let bmi = weight / (height * height);
+
+document.getElementById("bmiResult").innerText =
+"Your BMI is " + bmi.toFixed(2);
+
+}
+
+function calculateProtein(){
+
+let weight = document.getElementById("bodyweight").value;
+
+let protein = weight * 2;
+
+document.getElementById("proteinResult").innerText =
+"You need about " + protein + " grams of protein daily.";
+
+}
+
+</script>
+<section id="page-protein" class="page-panel">
+<section class="tool-section">
+
+<div class="section-title">Daily Protein Calculator</div>
+
+<div class="tool-card">
+
+<label>Body Weight (kg)</label>
+<input type="number" id="bodyweight">
+
+<button onclick="calculateProtein()">Calculate Protein</button>
+
+<p id="proteinResult"></p>
+
+</div>
+</section>
+</section>
+<section id="page-meal" class="page-panel">
+<section class="diet-section">
+
+<div class="section-eyebrow">Nutrition Plan</div>
+<div class="section-title">Weekly Indian Diet Planner</div>
+<p class="diet-intro">Each day includes four meals with a simple recipe method, approximate serving size, and estimated nutrition so the planner is more practical to follow. Values are approximate and meant for general fitness planning.</p>
+
+<div class="diet-grid">
+
+<div class="diet-card">
+<h3>Monday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Oats Upma + 3 Egg Bhurji</div>
+<div class="meal-detail">Amount: 70 g oats, mixed vegetables, 3 eggs, 1 tsp oil</div>
+<div class="meal-recipe">Recipe: Dry roast oats, saute onion, carrot, beans, and green chili in a little oil, then cook with water and salt until fluffy. Scramble eggs separately with tomato, onion, and turmeric.</div>
+<div class="meal-nutrition">
+<span>420 kcal</span><span>26 g protein</span><span>38 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Brown Rice + Dal Tadka + Cucumber Salad</div>
+<div class="meal-detail">Amount: 1.5 cups cooked brown rice, 1 cup dal, 1 bowl salad</div>
+<div class="meal-recipe">Recipe: Pressure cook toor dal, then temper with cumin, garlic, tomato, and a little ghee. Serve with steamed brown rice and sliced cucumber.</div>
+<div class="meal-nutrition">
+<span>560 kcal</span><span>22 g protein</span><span>86 g carbs</span><span>12 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Roasted Chana + Buttermilk</div>
+<div class="meal-detail">Amount: 40 g roasted chana, 250 ml buttermilk</div>
+<div class="meal-recipe">Recipe: Serve dry roasted chana with chilled buttermilk seasoned with roasted cumin powder and mint.</div>
+<div class="meal-nutrition">
+<span>180 kcal</span><span>10 g protein</span><span>24 g carbs</span><span>4 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Paneer Bhurji + 2 Roti</div>
+<div class="meal-detail">Amount: 120 g paneer, 2 whole wheat roti, onion-tomato masala</div>
+<div class="meal-recipe">Recipe: Crumble paneer into sauteed onion, tomato, capsicum, and spices. Cook until coated and serve hot with fresh rotis.</div>
+<div class="meal-nutrition">
+<span>510 kcal</span><span>28 g protein</span><span>34 g carbs</span><span>27 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1670 kcal</span><span>Protein: 86 g</span><span>Carbs: 182 g</span><span>Fat: 61 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Tuesday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Vegetable Poha + Peanut Topping</div>
+<div class="meal-detail">Amount: 80 g poha, peas, onion, curry leaves, 15 g peanuts</div>
+<div class="meal-recipe">Recipe: Wash poha, then toss with sauteed mustard seeds, curry leaves, onion, peas, turmeric, and roasted peanuts. Finish with lemon.</div>
+<div class="meal-nutrition">
+<span>390 kcal</span><span>11 g protein</span><span>58 g carbs</span><span>12 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Grilled Chicken + Jeera Rice + Sauteed Beans</div>
+<div class="meal-detail">Amount: 150 g chicken breast, 1.5 cups rice, 1 cup beans</div>
+<div class="meal-recipe">Recipe: Marinate chicken with curd, chili, ginger-garlic, and grill until cooked. Serve with cumin rice and lightly sauteed beans.</div>
+<div class="meal-nutrition">
+<span>610 kcal</span><span>42 g protein</span><span>66 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Fruit Bowl + Greek Yogurt</div>
+<div class="meal-detail">Amount: 1 apple, 1 banana, 150 g yogurt</div>
+<div class="meal-recipe">Recipe: Chop fresh fruit and fold into chilled yogurt with cinnamon or a pinch of chia seeds if desired.</div>
+<div class="meal-nutrition">
+<span>240 kcal</span><span>12 g protein</span><span>38 g carbs</span><span>3 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Moong Dal + 2 Roti + Stir-Fry Bhindi</div>
+<div class="meal-detail">Amount: 1 cup moong dal, 2 roti, 1 cup bhindi</div>
+<div class="meal-recipe">Recipe: Simmer moong dal with ginger and tomato, then temper with cumin. Pair with rotis and okra stir-fried using minimal oil.</div>
+<div class="meal-nutrition">
+<span>470 kcal</span><span>20 g protein</span><span>58 g carbs</span><span>14 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1710 kcal</span><span>Protein: 85 g</span><span>Carbs: 220 g</span><span>Fat: 47 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Wednesday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Moong Dal Chilla + Mint Curd</div>
+<div class="meal-detail">Amount: 2 large chilla from 80 g soaked moong dal, 100 g curd</div>
+<div class="meal-recipe">Recipe: Blend soaked moong dal with ginger and chili, spread into chilla on a tawa, and cook on both sides. Serve with mint curd.</div>
+<div class="meal-nutrition">
+<span>360 kcal</span><span>22 g protein</span><span>36 g carbs</span><span>11 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Rajma Curry + Steamed Rice</div>
+<div class="meal-detail">Amount: 1.5 cups rajma, 1.25 cups rice</div>
+<div class="meal-recipe">Recipe: Pressure cook rajma, simmer in onion-tomato gravy with ginger-garlic and garam masala, then serve with steamed rice.</div>
+<div class="meal-nutrition">
+<span>590 kcal</span><span>21 g protein</span><span>94 g carbs</span><span>12 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Whey Protein Shake + Banana</div>
+<div class="meal-detail">Amount: 1 scoop whey, 250 ml milk, 1 banana</div>
+<div class="meal-recipe">Recipe: Blend whey with chilled milk and banana until smooth. Add ice if you want it thicker and colder.</div>
+<div class="meal-nutrition">
+<span>260 kcal</span><span>28 g protein</span><span>25 g carbs</span><span>4 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Paneer Salad Bowl</div>
+<div class="meal-detail">Amount: 120 g grilled paneer, lettuce, cucumber, tomato, corn</div>
+<div class="meal-recipe">Recipe: Grill paneer cubes with pepper and paprika, then toss with salad vegetables and lemon-curd dressing.</div>
+<div class="meal-nutrition">
+<span>410 kcal</span><span>24 g protein</span><span>20 g carbs</span><span>24 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1620 kcal</span><span>Protein: 95 g</span><span>Carbs: 175 g</span><span>Fat: 51 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Thursday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Besan Cheela + Paneer Filling</div>
+<div class="meal-detail">Amount: 2 cheela, 60 g paneer filling, mint chutney</div>
+<div class="meal-recipe">Recipe: Make a besan batter with onion, tomato, ajwain, and spices. Cook thin cheela and fill with lightly spiced crumbled paneer.</div>
+<div class="meal-nutrition">
+<span>430 kcal</span><span>24 g protein</span><span>34 g carbs</span><span>22 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Fish Curry + Red Rice</div>
+<div class="meal-detail">Amount: 150 g fish, 1.5 cups red rice, curry gravy</div>
+<div class="meal-recipe">Recipe: Simmer fish in a tomato-onion curry with ginger, garlic, and coriander. Serve with cooked red rice and a lime wedge.</div>
+<div class="meal-nutrition">
+<span>580 kcal</span><span>38 g protein</span><span>62 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Sprouts Chaat</div>
+<div class="meal-detail">Amount: 1 bowl moong sprouts, onion, tomato, lemon</div>
+<div class="meal-recipe">Recipe: Steam sprouts lightly, then toss with chopped vegetables, lemon juice, black salt, and coriander.</div>
+<div class="meal-nutrition">
+<span>190 kcal</span><span>12 g protein</span><span>28 g carbs</span><span>3 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Chicken Soup + 2 Phulka</div>
+<div class="meal-detail">Amount: 1.5 cups chicken soup, 2 phulka, mixed vegetables</div>
+<div class="meal-recipe">Recipe: Slow simmer chicken pieces with carrot, beans, pepper, and garlic for a light soup. Serve with phulka on the side.</div>
+<div class="meal-nutrition">
+<span>430 kcal</span><span>32 g protein</span><span>36 g carbs</span><span>12 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1630 kcal</span><span>Protein: 106 g</span><span>Carbs: 160 g</span><span>Fat: 55 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Friday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Idli + Sambar + Boiled Eggs</div>
+<div class="meal-detail">Amount: 3 idli, 1 cup sambar, 2 boiled eggs</div>
+<div class="meal-recipe">Recipe: Serve fresh idli with vegetable sambar and boiled eggs seasoned with black pepper and salt.</div>
+<div class="meal-nutrition">
+<span>440 kcal</span><span>23 g protein</span><span>48 g carbs</span><span>16 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Paneer Pulao + Raita</div>
+<div class="meal-detail">Amount: 1.5 cups paneer pulao, 1/2 cup cucumber raita</div>
+<div class="meal-recipe">Recipe: Cook basmati rice with paneer cubes, peas, carrot, and whole spices. Pair with simple cucumber-curd raita.</div>
+<div class="meal-nutrition">
+<span>620 kcal</span><span>25 g protein</span><span>72 g carbs</span><span>24 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Peanut Butter Toast + Milk</div>
+<div class="meal-detail">Amount: 2 whole wheat bread slices, 1 tbsp peanut butter, 200 ml milk</div>
+<div class="meal-recipe">Recipe: Toast bread, spread peanut butter evenly, and serve with warm or chilled milk.</div>
+<div class="meal-nutrition">
+<span>290 kcal</span><span>14 g protein</span><span>24 g carbs</span><span>14 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Palak Dal + 2 Roti</div>
+<div class="meal-detail">Amount: 1 cup dal with spinach, 2 roti</div>
+<div class="meal-recipe">Recipe: Cook dal until soft, then simmer with chopped spinach, garlic, tomato, and cumin tempering.</div>
+<div class="meal-nutrition">
+<span>450 kcal</span><span>19 g protein</span><span>56 g carbs</span><span>11 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1800 kcal</span><span>Protein: 81 g</span><span>Carbs: 200 g</span><span>Fat: 65 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Saturday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Masala Dosa + Sambar</div>
+<div class="meal-detail">Amount: 2 dosa, potato masala, 1 cup sambar</div>
+<div class="meal-recipe">Recipe: Fill crisp dosa with lightly spiced potato masala and serve with hot sambar and chutney.</div>
+<div class="meal-nutrition">
+<span>520 kcal</span><span>14 g protein</span><span>72 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Chicken Biryani + Onion Raita</div>
+<div class="meal-detail">Amount: 1.5 cups biryani, 1/2 cup raita</div>
+<div class="meal-recipe">Recipe: Layer cooked rice with marinated chicken, mint, fried onion, and spices, then steam on low heat. Serve with onion raita.</div>
+<div class="meal-nutrition">
+<span>690 kcal</span><span>35 g protein</span><span>74 g carbs</span><span>26 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Coconut Water + Mixed Nuts</div>
+<div class="meal-detail">Amount: 1 coconut water, 25 g mixed nuts</div>
+<div class="meal-recipe">Recipe: Keep the snack simple with fresh coconut water and a small portion of almonds, cashews, and walnuts.</div>
+<div class="meal-nutrition">
+<span>220 kcal</span><span>5 g protein</span><span>14 g carbs</span><span>16 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Mixed Veg Curry + 2 Phulka + Curd</div>
+<div class="meal-detail">Amount: 1 cup curry, 2 phulka, 100 g curd</div>
+<div class="meal-recipe">Recipe: Cook cauliflower, beans, peas, and carrot in onion-tomato gravy. Serve with soft phulka and plain curd.</div>
+<div class="meal-nutrition">
+<span>430 kcal</span><span>16 g protein</span><span>52 g carbs</span><span>14 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1860 kcal</span><span>Protein: 70 g</span><span>Carbs: 212 g</span><span>Fat: 74 g</span>
+</div>
+</div>
+
+<div class="diet-card">
+<h3>Sunday</h3>
+<div class="meal-block">
+<h4>Breakfast</h4>
+<div class="meal-name">Ragi Porridge + Banana + Almonds</div>
+<div class="meal-detail">Amount: 1 bowl ragi porridge, 1 banana, 10 almonds</div>
+<div class="meal-recipe">Recipe: Cook ragi flour with milk and water until smooth, sweeten lightly if needed, and top with sliced banana and crushed almonds.</div>
+<div class="meal-nutrition">
+<span>410 kcal</span><span>14 g protein</span><span>54 g carbs</span><span>14 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Lunch</h4>
+<div class="meal-name">Chole + Jeera Rice + Salad</div>
+<div class="meal-detail">Amount: 1.25 cups chole, 1.25 cups rice, fresh salad</div>
+<div class="meal-recipe">Recipe: Simmer chickpeas in a thick onion-tomato masala with chole spices, then serve with jeera rice and onion-cucumber salad.</div>
+<div class="meal-nutrition">
+<span>610 kcal</span><span>20 g protein</span><span>92 g carbs</span><span>15 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Snack</h4>
+<div class="meal-name">Lassi + Roasted Makhana</div>
+<div class="meal-detail">Amount: 250 ml lassi, 25 g makhana</div>
+<div class="meal-recipe">Recipe: Blend curd with water for lassi and dry roast makhana with pepper and a tiny pinch of ghee.</div>
+<div class="meal-nutrition">
+<span>210 kcal</span><span>10 g protein</span><span>24 g carbs</span><span>7 g fat</span>
+</div>
+</div>
+<div class="meal-block">
+<h4>Dinner</h4>
+<div class="meal-name">Tofu Stir-Fry + Millet Roti</div>
+<div class="meal-detail">Amount: 120 g tofu, 2 millet roti, bell pepper and broccoli</div>
+<div class="meal-recipe">Recipe: Stir-fry tofu with garlic, pepper, soy, and vegetables on high heat. Serve with freshly cooked millet roti.</div>
+<div class="meal-nutrition">
+<span>460 kcal</span><span>26 g protein</span><span>38 g carbs</span><span>18 g fat</span>
+</div>
+</div>
+<div class="diet-day-meta">
+<span>Total: 1690 kcal</span><span>Protein: 70 g</span><span>Carbs: 208 g</span><span>Fat: 54 g</span>
+</div>
+</div>
+
+</div>
+
+</section>
+</section>
 </body>
 </html>
