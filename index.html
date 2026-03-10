@@ -7,18 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:         #0a0900;
-  --surface:    #111008;
-  --card:       #17140a;
-  --border:     #2a2410;
-  --border-hi:  #3d3418;
-  --accent:     #c9a84c;
-  --accent-dim: #7a6030;
-  --accent-glow:rgba(201,168,76,0.12);
-  --white:      #f0e8d4;
-  --muted:      #6e6248;
-  --sub:        #3a3020;
-  --text:       #d4c8a8;
+  --bg:         #050505;
+  --surface:    #101113;
+  --card:       #17181c;
+  --border:     #2c2e34;
+  --border-hi:  #484b52;
+  --accent:     #f3c94b;
+  --accent-dim: #9e8130;
+  --accent-glow:rgba(243,201,75,0.18);
+  --white:      #f7f7f4;
+  --muted:      #9a9ca3;
+  --sub:        #212328;
+  --text:       #d7d9df;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,7 +28,9 @@
 ::-webkit-scrollbar-thumb { background: var(--accent); }
 
 body {
-  background: var(--bg);
+  background:
+    radial-gradient(circle at top right, rgba(243,201,75,0.08), transparent 28%),
+    linear-gradient(180deg, #090909 0%, #050505 100%);
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
@@ -43,6 +45,9 @@ body {
   padding: 72px 64px 56px;
   border-bottom: 1px solid var(--border);
   overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(243,201,75,0.12), transparent 24%),
+    linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0));
 }
 
 /* big background number */
@@ -53,7 +58,7 @@ body {
   font-family: 'DM Serif Display', serif;
   font-size: 280px;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(201,168,76,0.08);
+  -webkit-text-stroke: 1px rgba(243,201,75,0.12);
   pointer-events: none;
   line-height: 1;
   letter-spacing: -8px;
@@ -148,7 +153,7 @@ h1 em {
 
 /* ─── PRINCIPLES ─── */
 .principles {
-  background: var(--surface);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(16,17,19,0.96));
   border-bottom: 1px solid var(--border);
   padding: 24px 64px;
   position: relative;
@@ -195,7 +200,7 @@ h1 em {
   top: 0;
   z-index: 100;
   display: flex;
-  background: rgba(10,10,10,0.97);
+  background: rgba(5,5,5,0.94);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   padding: 0 64px;
@@ -404,10 +409,10 @@ h1 em {
   border: 1px solid;
 }
 .badge-gold  { border-color: var(--accent-dim); color: var(--accent); }
-.badge-red   { border-color: #4a2a10; color: #c9a84c; }
-.badge-blue  { border-color: #2a3010; color: #a8c870; }
-.badge-green { border-color: #1a3018; color: #70b888; }
-.badge-purple{ border-color: #3a2818; color: #c8a060; }
+.badge-red   { border-color: #5a4a1f; color: var(--accent); }
+.badge-blue  { border-color: #39414b; color: #d5d8df; }
+.badge-green { border-color: #474c52; color: #f0f1f3; }
+.badge-purple{ border-color: #5a5f66; color: #e8d48e; }
 .badge-rest  { border-color: var(--sub); color: var(--muted); }
 
 /* ─── EXERCISES GRID ─── */
@@ -757,7 +762,7 @@ h1 em {
   top: 57px;
   z-index: 90;
   backdrop-filter: blur(16px);
-  background: rgba(10,10,10,0.97);
+  background: rgba(5,5,5,0.94);
 }
 .suppl-btn {
   background: none;
@@ -1140,7 +1145,7 @@ display:flex;
 gap:0;
 padding:0 64px;
 overflow-x:auto;
-background:rgba(10,10,10,0.97);
+background:rgba(5,5,5,0.94);
 backdrop-filter:blur(16px);
 border-top:1px solid var(--border);
 border-bottom:1px solid var(--border);
@@ -1401,7 +1406,7 @@ line-height:1.5;
 }
 
 .tool-sidecard{
-background:linear-gradient(180deg, rgba(23,20,10,0.95), rgba(17,16,8,0.95));
+background:linear-gradient(180deg, rgba(23,24,28,0.97), rgba(11,12,14,0.98));
 border:1px solid var(--border);
 padding:22px;
 display:flex;
