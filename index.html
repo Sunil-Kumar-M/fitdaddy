@@ -57,6 +57,22 @@
 <section class="schedule-section">
   <div class="section-eyebrow">Morning Sessions · 6:00 AM – 8:30 AM</div>
   <div class="section-title">Weekly Training Schedule</div>
+  <div class="workout-progress-shell">
+    <div class="workout-progress-card">
+      <div class="workout-progress-copy">
+        <div class="workout-progress-label">Weekly Completion</div>
+        <div class="workout-progress-value"><span id="workoutProgressCount">0 / 0</span></div>
+        <div class="workout-progress-note" id="workoutProgressNote">Track each completed workout block and your progress will reset automatically every new week.</div>
+      </div>
+      <div class="workout-progress-side">
+        <div class="workout-progress-percent" id="workoutProgressPercent">0%</div>
+        <button class="workout-reset-btn" id="workoutResetBtn" type="button">Reset This Week</button>
+      </div>
+    </div>
+    <div class="workout-progress-bar" aria-hidden="true">
+      <span id="workoutProgressFill"></span>
+    </div>
+  </div>
   <div class="schedule-grid">
     <!-- MON -->
     <div class="sched-day" data-day="Monday">
@@ -2021,6 +2037,163 @@
 
 </section>
 </section>
+<script>
+(function () {
+  var storagePrefix = "fitdaddy-workout-completions";
+
+  function getWeekStorageKey() {
+    var now = new Date();
+    var day = now.getDay();
+    var diffToMonday = day === 0 ? -6 : 1 - day;
+    var monday = new Date(now);
+    monday.setHours(0, 0, 0, 0);
+    monday.setDate(now.getDate() + diffToMonday);
+    return storagePrefix + "-" + monday.toISOString().slice(0, 10);
+  }
+
+  function getClosestByClass(element, className) {
+    while (element && element !== document.body) {
+      if (element.classList && element.classList.contains(className)) {
+        return element;
+      }
+      element = element.parentNode;
+    }
+    return null;
+  }
+
+  function slugifyText(value) {
+    return String(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  function getState() {
+    try {
+      return JSON.parse(localStorage.getItem(getWeekStorageKey()) || "{}");
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function saveState(state) {
+    localStorage.setItem(getWeekStorageKey(), JSON.stringify(state));
+  }
+
+  function getWorkoutItemId(item) {
+    if (item.classList.contains("ex-cell")) {
+      var weekPanel = getClosestByClass(item, "week-panel");
+      var dayBlock = getClosestByClass(item, "day-block");
+      var dayLabelCell = dayBlock ? dayBlock.querySelector(".day-num-col") : null;
+      var exerciseNameCell = item.querySelector(".ex-name");
+      var panelId = weekPanel ? weekPanel.id : "week";
+      var dayLabel = dayLabelCell ? dayLabelCell.textContent.trim() : "day";
+      var exerciseName = exerciseNameCell ? exerciseNameCell.textContent.trim() : "exercise";
+      return panelId + "-" + slugifyText(dayLabel) + "-" + slugifyText(exerciseName);
+    }
+
+    var supplPanel = getClosestByClass(item, "suppl-panel");
+    var supplNameCell = item.querySelector(".suppl-ex-name");
+    var supplPanelId = supplPanel ? supplPanel.id : "supplementary";
+    var supplExerciseName = supplNameCell ? supplNameCell.textContent.trim() : "exercise";
+    return supplPanelId + "-" + slugifyText(supplExerciseName);
+  }
+
+  function setCompletedState(item, isComplete) {
+    var button = item.querySelector(".workout-complete-btn");
+    item.classList.toggle("is-complete", isComplete);
+    if (button) {
+      button.classList.toggle("is-complete", isComplete);
+      button.innerHTML = isComplete ? "Completed" : "Complete";
+    }
+  }
+
+  function toggleWorkoutCompletion(item) {
+    var state = getState();
+    var workoutId = item.getAttribute("data-workout-id");
+    var nextValue;
+
+    if (!workoutId) {
+      return;
+    }
+
+    nextValue = !state[workoutId];
+    if (nextValue) {
+      state[workoutId] = true;
+    } else {
+      delete state[workoutId];
+    }
+
+    saveState(state);
+    setCompletedState(item, nextValue);
+  }
+
+  function attachFallbackButtons() {
+    var state = getState();
+    var workoutItems = document.querySelectorAll(".ex-cell, .suppl-ex-row");
+    var i;
+
+    for (i = 0; i < workoutItems.length; i += 1) {
+      var item = workoutItems[i];
+      var workoutId = getWorkoutItemId(item);
+      var actionRow = item.querySelector(".workout-complete-row");
+      var button;
+      var hint;
+      var body;
+
+      item.setAttribute("data-workout-id", workoutId);
+      if (item.dataset) {
+        item.dataset.workoutId = workoutId;
+      }
+
+      if (!actionRow) {
+        actionRow = document.createElement("div");
+        actionRow.className = "workout-complete-row";
+
+        button = document.createElement("button");
+        button.type = "button";
+        button.className = "workout-complete-btn";
+        button.innerHTML = "Complete";
+        button.onclick = function (event) {
+          event = event || window.event;
+          if (event.stopPropagation) event.stopPropagation();
+          event.cancelBubble = true;
+          toggleWorkoutCompletion(getClosestByClass(this, "ex-cell") || getClosestByClass(this, "suppl-ex-row"));
+        };
+
+        actionRow.appendChild(button);
+
+        if (item.classList.contains("ex-cell")) {
+          hint = item.querySelector(".ex-expand-toggle");
+          if (hint && hint.parentNode) {
+            hint.parentNode.insertBefore(actionRow, hint.nextSibling);
+          } else {
+            item.appendChild(actionRow);
+          }
+        } else {
+          hint = item.querySelector(".suppl-expand-hint");
+          body = item.querySelector(".suppl-ex-body");
+          if (hint && hint.parentNode) {
+            hint.parentNode.insertBefore(actionRow, hint.nextSibling);
+          } else if (body) {
+            body.appendChild(actionRow);
+          }
+        }
+      }
+
+      setCompletedState(item, Boolean(state[workoutId]));
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", attachFallbackButtons);
+  } else {
+    attachFallbackButtons();
+  }
+
+  window.addEventListener("load", attachFallbackButtons);
+})();
+</script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>

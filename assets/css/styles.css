@@ -439,13 +439,20 @@ h1 em {
 .ex-cell.is-complete .ex-name,
 .ex-cell.is-complete .ex-sets {
   text-decoration: line-through;
-  text-decoration-thickness: 1.5px;
+  text-decoration-thickness: 1.75px;
+  text-decoration-color: rgba(243, 201, 75, 0.95);
 }
 .ex-cell.is-complete .ex-name,
 .ex-cell.is-complete .ex-sets,
 .ex-cell.is-complete .ex-expand-toggle,
 .ex-cell.is-complete .ex-detail {
-  opacity: 0.55;
+  opacity: 0.72;
+}
+.ex-cell.is-complete {
+  background:
+    linear-gradient(135deg, rgba(243, 201, 75, 0.09), rgba(255, 255, 255, 0.01)),
+    rgba(255, 255, 255, 0.02);
+  border-color: rgba(243, 201, 75, 0.28);
 }
 
 .ex-top {
@@ -457,27 +464,37 @@ h1 em {
 .workout-complete-row {
   display: flex;
   justify-content: flex-end;
-  margin-top: 6px;
+  margin-top: 10px;
 }
 .workout-complete-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  padding: 6px 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 132px;
+  min-height: 36px;
+  background: rgba(243, 201, 75, 0.08);
+  border: 1px solid rgba(243, 201, 75, 0.28);
+  color: var(--white);
+  padding: 8px 14px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
   cursor: pointer;
-  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 .workout-complete-btn:hover {
-  color: var(--white);
+  transform: translateY(-1px);
+  color: var(--accent);
   border-color: var(--accent);
+  background: rgba(243, 201, 75, 0.16);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
 }
 .workout-complete-btn.is-complete {
-  background: rgba(243,201,75,0.12);
+  background: linear-gradient(135deg, rgba(243, 201, 75, 0.24), rgba(255, 255, 255, 0.08));
   border-color: var(--accent);
   color: var(--accent);
 }
@@ -649,6 +666,103 @@ h1 em {
   color: var(--white);
   letter-spacing: -1px;
   margin-bottom: 24px;
+}
+.workout-progress-shell {
+  margin-bottom: 24px;
+}
+.workout-progress-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 20px;
+  border: 1px solid rgba(243, 201, 75, 0.18);
+  background:
+    linear-gradient(135deg, rgba(243, 201, 75, 0.08), rgba(255, 255, 255, 0.02)),
+    rgba(16, 16, 16, 0.92);
+}
+.workout-progress-copy {
+  flex: 1;
+  min-width: 0;
+}
+.workout-progress-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.workout-progress-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.workout-progress-note {
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  max-width: 620px;
+}
+.workout-progress-side {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.workout-progress-percent {
+  min-width: 72px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: center;
+  color: var(--white);
+}
+.workout-progress-bar {
+  position: relative;
+  height: 8px;
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+.workout-progress-bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #f3c94b 0%, #fff2a6 100%);
+  box-shadow: 0 0 22px rgba(243, 201, 75, 0.28);
+  transition: width 0.25s ease;
+}
+.workout-reset-btn {
+  min-width: 148px;
+  padding: 10px 16px;
+  border: 1px solid rgba(243, 201, 75, 0.35);
+  background: rgba(243, 201, 75, 0.08);
+  color: var(--white);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.workout-reset-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  background: rgba(243, 201, 75, 0.14);
+  color: var(--accent);
 }
 .schedule-grid {
   display: grid;
@@ -894,13 +1008,20 @@ h1 em {
 .suppl-ex-row.is-complete .suppl-ex-name,
 .suppl-ex-row.is-complete .suppl-ex-sets {
   text-decoration: line-through;
-  text-decoration-thickness: 1.5px;
+  text-decoration-thickness: 1.75px;
+  text-decoration-color: rgba(243, 201, 75, 0.95);
 }
 .suppl-ex-row.is-complete .suppl-ex-name,
 .suppl-ex-row.is-complete .suppl-ex-sets,
 .suppl-ex-row.is-complete .suppl-expand-hint,
 .suppl-ex-row.is-complete .suppl-ex-detail {
-  opacity: 0.55;
+  opacity: 0.72;
+}
+.suppl-ex-row.is-complete {
+  border-left-color: rgba(243, 201, 75, 0.38);
+  background:
+    linear-gradient(135deg, rgba(243, 201, 75, 0.08), rgba(255, 255, 255, 0.015)),
+    rgba(255, 255, 255, 0.02);
 }
 .suppl-ex-num {
   display: flex;
@@ -1109,6 +1230,18 @@ h1 em {
   .wi-right { width: 100%; }
   .week-btn { padding: 16px 18px 14px; }
   .suppl-btn { padding: 14px 16px 12px; }
+  .workout-progress-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .workout-progress-side {
+    width: 100%;
+    align-items: stretch;
+  }
+  .workout-progress-percent,
+  .workout-reset-btn {
+    width: 100%;
+  }
   .schedule-grid { grid-template-columns: repeat(2, 1fr); }
   .suppl-meta-row { grid-template-columns: repeat(2, 1fr); }
   .suppl-intro { flex-direction: column; }
@@ -1143,6 +1276,15 @@ h1 em {
   .ex-meta-grid,
   .meal-nutrition { grid-template-columns: 1fr; }
   .tool-header { align-items: flex-start; }
+  .workout-progress-card {
+    padding: 16px;
+  }
+  .workout-progress-value {
+    font-size: 28px;
+  }
+  .workout-progress-note {
+    font-size: 12px;
+  }
   .page-tab {
     min-width: 156px;
     font-size: 10px;
@@ -1156,6 +1298,10 @@ h1 em {
   .tool-card select { width: 100%; }
   .tool-quick-actions { display:grid; grid-template-columns:1fr; }
   .tool-result-value { font-size: 32px; }
+  .workout-complete-btn {
+    min-width: 0;
+    width: 100%;
+  }
   .diet-card h3 { font-size: 22px; }
   .meal-name { font-size: 14px; }
   .meal-detail, .meal-recipe { font-size: 12px; }

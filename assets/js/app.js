@@ -23,6 +23,10 @@ function saveWorkoutCompletionState(state) {
   localStorage.setItem(getWeekStorageKey(), JSON.stringify(state));
 }
 
+function getWorkoutItems() {
+  return Array.from(document.querySelectorAll(".ex-cell, .suppl-ex-row"));
+}
+
 function slugifyWorkoutText(value) {
   return value
     .toLowerCase()
@@ -55,7 +59,51 @@ function setWorkoutCompletedState(element, isComplete) {
   if (button) {
     button.classList.toggle("is-complete", isComplete);
     button.textContent = isComplete ? "Completed" : "Complete";
+    button.setAttribute("aria-pressed", isComplete ? "true" : "false");
   }
+}
+
+function updateWorkoutProgress() {
+  const progressCount = document.getElementById("workoutProgressCount");
+  const progressPercent = document.getElementById("workoutProgressPercent");
+  const progressFill = document.getElementById("workoutProgressFill");
+  const progressNote = document.getElementById("workoutProgressNote");
+  const workoutItems = getWorkoutItems();
+  const total = workoutItems.length;
+  const completed = workoutItems.filter((item) => item.classList.contains("is-complete")).length;
+  const percent = total ? Math.round((completed / total) * 100) : 0;
+
+  if (progressCount) {
+    progressCount.textContent = `${completed} / ${total}`;
+  }
+
+  if (progressPercent) {
+    progressPercent.textContent = `${percent}%`;
+  }
+
+  if (progressFill) {
+    progressFill.style.width = `${percent}%`;
+  }
+
+  if (progressNote) {
+    if (!total) {
+      progressNote.textContent = "Workout items will appear here once the section is loaded.";
+    } else if (!completed) {
+      progressNote.textContent = "Start marking each workout as complete. Your progress resets automatically every new week.";
+    } else if (completed === total) {
+      progressNote.textContent = "Everything for this week is completed. Reset any time or let the next week refresh automatically.";
+    } else {
+      progressNote.textContent = `${total - completed} workout item${total - completed === 1 ? "" : "s"} left to finish this week.`;
+    }
+  }
+}
+
+function resetWorkoutProgress() {
+  localStorage.removeItem(getWeekStorageKey());
+  getWorkoutItems().forEach((item) => {
+    setWorkoutCompletedState(item, false);
+  });
+  updateWorkoutProgress();
 }
 
 function toggleWorkoutCompletion(element) {
@@ -70,11 +118,12 @@ function toggleWorkoutCompletion(element) {
 
   saveWorkoutCompletionState(state);
   setWorkoutCompletedState(element, nextValue);
+  updateWorkoutProgress();
 }
 
 function attachWorkoutCompletionButtons() {
   const state = getWorkoutCompletionState();
-  const workoutItems = document.querySelectorAll(".ex-cell, .suppl-ex-row");
+  const workoutItems = getWorkoutItems();
 
   workoutItems.forEach((item) => {
     const workoutId = getWorkoutItemId(item);
@@ -88,6 +137,7 @@ function attachWorkoutCompletionButtons() {
       button.type = "button";
       button.className = "workout-complete-btn";
       button.textContent = "Complete";
+      button.setAttribute("aria-label", "Mark workout as complete");
       button.addEventListener("click", (event) => {
         event.stopPropagation();
         toggleWorkoutCompletion(item);
@@ -111,6 +161,8 @@ function attachWorkoutCompletionButtons() {
 
     setWorkoutCompletedState(item, Boolean(state[workoutId]));
   });
+
+  updateWorkoutProgress();
 }
 
 /* ─── PPL Week Tabs ─── */
@@ -176,6 +228,8 @@ function attachWorkoutCompletionButtons() {
 
   /* ─── Expandable PPL Exercise Cells ─── */
   document.addEventListener('DOMContentLoaded', () => {
+    const resetButton = document.getElementById('workoutResetBtn');
+
     document.querySelectorAll('.tool-card, .tool-sidecard, .diet-card, .meal-block, .schedule-section, .coaching-note, .abs-section, .forearms-section').forEach(el => {
       el.setAttribute('data-reveal', '');
     });
@@ -238,6 +292,10 @@ function attachWorkoutCompletionButtons() {
       document.querySelectorAll('[data-reveal]').forEach(item => revealObserver.observe(item));
     } else {
       revealVisibleItems();
+    }
+
+    if (resetButton) {
+      resetButton.addEventListener('click', resetWorkoutProgress);
     }
 
     attachWorkoutCompletionButtons();
