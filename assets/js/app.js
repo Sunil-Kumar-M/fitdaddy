@@ -87,13 +87,13 @@ function updateWorkoutProgress() {
 
   if (progressNote) {
     if (!total) {
-      progressNote.textContent = "Workout items will appear here once the section is loaded.";
+      progressNote.textContent = "Workout items will appear here once the section loads.";
     } else if (!completed) {
-      progressNote.textContent = "Start marking each workout as complete. Your progress resets automatically every new week.";
+      progressNote.textContent = "Mark each workout as you finish it. Progress resets every new week.";
     } else if (completed === total) {
-      progressNote.textContent = "Everything for this week is completed. Reset any time or let the next week refresh automatically.";
+      progressNote.textContent = "Everything for this week is completed. Reset any time or wait for next week.";
     } else {
-      progressNote.textContent = `${total - completed} workout item${total - completed === 1 ? "" : "s"} left to finish this week.`;
+      progressNote.textContent = `${total - completed} workout item${total - completed === 1 ? "" : "s"} left this week.`;
     }
   }
 }
