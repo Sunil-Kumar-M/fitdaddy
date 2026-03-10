@@ -436,12 +436,50 @@ h1 em {
 }
 .ex-cell:hover { background: var(--card); }
 .ex-cell:hover::before { opacity: 1; }
+.ex-cell.is-complete .ex-name,
+.ex-cell.is-complete .ex-sets {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+.ex-cell.is-complete .ex-name,
+.ex-cell.is-complete .ex-sets,
+.ex-cell.is-complete .ex-expand-toggle,
+.ex-cell.is-complete .ex-detail {
+  opacity: 0.55;
+}
 
 .ex-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
+}
+.workout-complete-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+.workout-complete-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.workout-complete-btn:hover {
+  color: var(--white);
+  border-color: var(--accent);
+}
+.workout-complete-btn.is-complete {
+  background: rgba(243,201,75,0.12);
+  border-color: var(--accent);
+  color: var(--accent);
 }
 .ex-name {
   font-family: 'Manrope', sans-serif;
@@ -627,6 +665,7 @@ h1 em {
   gap: 8px;
   transition: background 0.2s;
   min-height: 130px;
+  position: relative;
 }
 .sched-day:hover { background: var(--card); }
 .sched-day.rest-day { opacity: 0.5; }
@@ -852,6 +891,17 @@ h1 em {
 }
 .suppl-ex-row:hover { background: var(--card); border-left-color: var(--accent); }
 .suppl-ex-row.open { background: var(--card); border-left-color: var(--accent); }
+.suppl-ex-row.is-complete .suppl-ex-name,
+.suppl-ex-row.is-complete .suppl-ex-sets {
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+.suppl-ex-row.is-complete .suppl-ex-name,
+.suppl-ex-row.is-complete .suppl-ex-sets,
+.suppl-ex-row.is-complete .suppl-expand-hint,
+.suppl-ex-row.is-complete .suppl-ex-detail {
+  opacity: 0.55;
+}
 .suppl-ex-num {
   display: flex;
   align-items: flex-start;
@@ -1684,6 +1734,8 @@ transform:translateY(0);
   .tool-card input,
   .tool-card button,
   .tool-card select { width: 100%; }
+  .workout-complete-row { justify-content: stretch; }
+  .workout-complete-btn { width: 100%; }
   .tool-quick-actions { display:grid; grid-template-columns:1fr; }
   .tool-result-value { font-size: 32px; }
   .diet-card h3 { font-size: 22px; }

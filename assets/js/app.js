@@ -1,3 +1,109 @@
+const WORKOUT_STORAGE_PREFIX = "fitdaddy-workout-completions";
+
+function getWeekStorageKey() {
+  const now = new Date();
+  const day = now.getDay();
+  const diffToMonday = day === 0 ? -6 : 1 - day;
+  const monday = new Date(now);
+  monday.setHours(0, 0, 0, 0);
+  monday.setDate(now.getDate() + diffToMonday);
+
+  return `${WORKOUT_STORAGE_PREFIX}-${monday.toISOString().slice(0, 10)}`;
+}
+
+function getWorkoutCompletionState() {
+  try {
+    return JSON.parse(localStorage.getItem(getWeekStorageKey()) || "{}");
+  } catch (error) {
+    return {};
+  }
+}
+
+function saveWorkoutCompletionState(state) {
+  localStorage.setItem(getWeekStorageKey(), JSON.stringify(state));
+}
+
+function slugifyWorkoutText(value) {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function getWorkoutItemId(element) {
+  if (element.classList.contains("ex-cell")) {
+    const panelId = element.closest(".week-panel")?.id || "week";
+    const dayLabel = element.closest(".day-block")?.querySelector(".day-num-col")?.textContent.trim() || "day";
+    const exerciseName = element.querySelector(".ex-name")?.textContent.trim() || "exercise";
+    return `${panelId}-${slugifyWorkoutText(dayLabel)}-${slugifyWorkoutText(exerciseName)}`;
+  }
+
+  const panelId = element.closest(".suppl-panel")?.id || "supplementary";
+  const exerciseName = element.querySelector(".suppl-ex-name")?.textContent.trim() || "exercise";
+  return `${panelId}-${slugifyWorkoutText(exerciseName)}`;
+}
+
+function setWorkoutCompletedState(element, isComplete) {
+  element.classList.toggle("is-complete", isComplete);
+  const button = element.querySelector(".workout-complete-btn");
+  if (button) {
+    button.classList.toggle("is-complete", isComplete);
+    button.textContent = isComplete ? "Completed" : "Complete";
+  }
+}
+
+function toggleWorkoutCompletion(element) {
+  const workoutId = element.dataset.workoutId;
+  if (!workoutId) return;
+
+  const state = getWorkoutCompletionState();
+  const nextValue = !state[workoutId];
+
+  if (nextValue) state[workoutId] = true;
+  else delete state[workoutId];
+
+  saveWorkoutCompletionState(state);
+  setWorkoutCompletedState(element, nextValue);
+}
+
+function attachWorkoutCompletionButtons() {
+  const state = getWorkoutCompletionState();
+  const workoutItems = document.querySelectorAll(".ex-cell, .suppl-ex-row");
+
+  workoutItems.forEach((item) => {
+    const workoutId = getWorkoutItemId(item);
+    item.dataset.workoutId = workoutId;
+
+    if (!item.querySelector(".workout-complete-row")) {
+      const actionRow = document.createElement("div");
+      actionRow.className = "workout-complete-row";
+
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "workout-complete-btn";
+      button.textContent = "Complete";
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleWorkoutCompletion(item);
+      });
+
+      actionRow.appendChild(button);
+
+      if (item.classList.contains("ex-cell")) {
+        const hint = item.querySelector(".ex-expand-toggle");
+        if (hint) hint.after(actionRow);
+        else item.appendChild(actionRow);
+      } else {
+        const hint = item.querySelector(".suppl-expand-hint");
+        if (hint) hint.after(actionRow);
+        else item.querySelector(".suppl-ex-body")?.appendChild(actionRow);
+      }
+    }
+
+    setWorkoutCompletedState(item, Boolean(state[workoutId]));
+  });
+}
+
 /* ─── PPL Week Tabs ─── */
   function showWeek(n, btn) {
     document.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
@@ -117,6 +223,7 @@
     }, { threshold: 0.12 });
 
     document.querySelectorAll('[data-reveal]').forEach(item => revealObserver.observe(item));
+    attachWorkoutCompletionButtons();
     revealVisibleItems(document.getElementById('page-workout'));
     setTimeout(animateCards, 100);
   });
